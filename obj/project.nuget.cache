@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZC0ymWesPPQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Ne\\Desktop\\EastSharp\\EastSharp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ne\\.nuget\\packages\\raylib-cs\\7.0.1\\raylib-cs.7.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
