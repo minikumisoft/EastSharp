@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ne\\Desktop\\EastSharp\\EastSharp.csproj": {}
+    "C:\\Users\\Ne\\Documents\\GitHub\\EastSharp\\EastSharp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ne\\Desktop\\EastSharp\\EastSharp.csproj": {
+    "C:\\Users\\Ne\\Documents\\GitHub\\EastSharp\\EastSharp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ne\\Desktop\\EastSharp\\EastSharp.csproj",
+        "projectUniqueName": "C:\\Users\\Ne\\Documents\\GitHub\\EastSharp\\EastSharp.csproj",
         "projectName": "EastSharp",
-        "projectPath": "C:\\Users\\Ne\\Desktop\\EastSharp\\EastSharp.csproj",
+        "projectPath": "C:\\Users\\Ne\\Documents\\GitHub\\EastSharp\\EastSharp.csproj",
         "packagesPath": "C:\\Users\\Ne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ne\\Desktop\\EastSharp\\obj\\",
+        "outputPath": "C:\\Users\\Ne\\Documents\\GitHub\\EastSharp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
