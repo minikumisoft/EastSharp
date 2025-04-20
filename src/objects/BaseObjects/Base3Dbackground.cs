@@ -44,7 +44,10 @@ namespace EastSharp
 
 		public virtual void Update()
 		{
-			
+			for(int i = 0; i < backgroundD3objects.Count; i++)
+			{
+				backgroundD3objects[i].Update();
+			}
 		}
 
 		public virtual void Unload()

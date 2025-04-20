@@ -10,7 +10,7 @@ namespace EastSharp
 		private Texture2D bodyTexture;
 		private Texture2D mouthTexture;
 
-		public Test3Dobject(Vector3 pos, Shader shader)
+		public Test3Dobject(Vector3 pos, Shader shader, Vector3 rotation)
 		{
 			model = LoadModel("assets/models/marisa/Marisa_Kirisame.obj");
 			bodyTexture = LoadTexture("assets/models/marisa/marisa.png");
@@ -23,11 +23,12 @@ namespace EastSharp
 			SetMaterialShader(ref model, 2, ref shader);
 
 			Position = pos;
+			Rotation = rotation;
 		}
 
 		public override void Draw()
 		{
-			DrawModel(model, Position, 1, Color.White);
+			DrawModelEx(model, Position, Rotation, Rotation.X + Rotation.Y + Rotation.Z, new Vector3(1, 1, 1), Color.White);
 		}
 
 		public override void Unload()

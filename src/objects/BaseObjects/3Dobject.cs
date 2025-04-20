@@ -9,6 +9,7 @@ namespace EastSharp
 	{
 		public Model model;
 		public Vector3 Position{get; set;}
+		public Vector3 Rotation{get; set;}
 
 		public virtual void Draw()
 		{
@@ -18,6 +19,11 @@ namespace EastSharp
 		public virtual void Unload()
 		{
 			
+		}
+
+		public virtual void Update()
+		{
+
 		}
 	}
 }
