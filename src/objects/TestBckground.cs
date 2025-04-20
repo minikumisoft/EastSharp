@@ -22,8 +22,10 @@ namespace EastSharp
 			testImage = GenImageChecked(100, 100, 10, 10, Color.White, Color.Blue);
 			testTexture = LoadTextureFromImage(testImage);
 
-			backgroundModel = LoadModelFromMesh(GenMeshPlane(200, 200, 1, 1));
-			SetMaterialTexture(ref backgroundModel, 0, MaterialMapIndex.Albedo, ref testTexture);
+			InitShaders();
+
+			backgroundD3objects.Add(new Test3Dobject(new Vector3(0, 0, 0), baseShader));
+
 			fogDestiny = 0.50f;
 			
 			// baseShader.Locs[(int)ShaderLocationIndex.MatrixModel] = GetShaderLocation(baseShader, "matModel");
@@ -37,7 +39,6 @@ namespace EastSharp
 			// SetShaderValue(baseShader, fogDestinyLoc, fogDestiny, ShaderUniformDataType.Float);
 
 			// SetMaterialShader(ref backgroundModel, 0, ref baseShader);
-			InitShaders();
 
 			Rlights.CreateLight(0, LightType.Point, new Vector3(0, 0.2f, 0), Vector3.Zero, Color.White, baseShader);
 		}

@@ -7,12 +7,12 @@ namespace EastSharp
 {
 	class D3object
 	{
-		public Model model{get; set;}
+		public Model model;
 		public Vector3 Position{get; set;}
 
-		public virtual void Draw(float Scale)
+		public virtual void Draw()
 		{
-			DrawModel(model, Position, Scale, Color.White);
+			
 		}
 	}
 }

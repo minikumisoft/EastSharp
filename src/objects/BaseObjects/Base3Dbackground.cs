@@ -7,7 +7,7 @@ namespace EastSharp
 {
 	unsafe class D3background
 	{
-		public Model backgroundModel;
+		public List<D3object> backgroundD3objects = new List<D3object>();
 		public Camera3D backgroundCamera;
 		public Shader baseShader = LoadShader("assets/shaders/lighting.vs", "assets/shaders/fog.fs");
 		public float fogDestiny{get; set;}
@@ -23,7 +23,6 @@ namespace EastSharp
 			int fogDestinyLoc = GetShaderLocation(baseShader, "fogDestiny");
 			SetShaderValue(baseShader, fogDestinyLoc, fogDestiny, ShaderUniformDataType.Float);
 
-			SetMaterialShader(ref backgroundModel, 0, ref baseShader);
 		}
 
 		public void UpdateShaders()
@@ -37,7 +36,10 @@ namespace EastSharp
 
 		public virtual void Draw()
 		{
-			DrawModel(backgroundModel, new Vector3(0, 0, 0), 1, Color.White);
+			for(int i = 0; i < backgroundD3objects.Count; i++)
+			{
+				backgroundD3objects[i].Draw();
+			}
 		}
 
 		public virtual void Update()
