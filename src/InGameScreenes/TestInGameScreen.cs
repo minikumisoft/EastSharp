@@ -47,6 +47,9 @@ namespace EastSharp
 		public override void Unload()
 		{
 			base.Unload();
+			testBackground.Unload();
+			player.Unload();
+			UnloadTexture(logoDebugTexture);
 		}
 	}
 }

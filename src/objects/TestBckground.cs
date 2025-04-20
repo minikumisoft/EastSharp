@@ -7,24 +7,27 @@ namespace EastSharp
 {
 	unsafe class TestBackground : D3background
 	{
-		private Image testImage;
-		private Texture2D testTexture;
+		private Random rand;
 
 
 		public TestBackground()
 		{
-			backgroundCamera.Position = new Vector3(10, 2, 10);
+			rand = new Random();
+			backgroundCamera.Position = new Vector3(10, 10, 10);
 			backgroundCamera.Target = new Vector3(0, 0, 0);
 			backgroundCamera.Up = new Vector3(0, 1, 0);
 			backgroundCamera.FovY = 45;
 			backgroundCamera.Projection = CameraProjection.Perspective;
 
-			testImage = GenImageChecked(100, 100, 10, 10, Color.White, Color.Blue);
-			testTexture = LoadTextureFromImage(testImage);
-
 			InitShaders();
 
 			backgroundD3objects.Add(new Test3Dobject(new Vector3(0, 0, 0), baseShader));
+
+			backgroundD3objects.Add(new Box3DObjectTest(new Vector3(5, 0, 0), baseShader));
+			for(int i = 0; i < 100; i++)
+			{
+				backgroundD3objects.Add(new Box3DObjectTest(new Vector3(rand.Next(-10, 10), rand.Next(-10, 10), rand.Next(-10, 10)), baseShader));
+			}
 
 			fogDestiny = 0.50f;
 			
@@ -40,7 +43,7 @@ namespace EastSharp
 
 			// SetMaterialShader(ref backgroundModel, 0, ref baseShader);
 
-			Rlights.CreateLight(0, LightType.Point, new Vector3(0, 0.2f, 0), Vector3.Zero, Color.White, baseShader);
+			Rlights.CreateLight(0, LightType.Point, new Vector3(2, 2, 0), Vector3.Zero, Color.White, baseShader);
 		}
 
 		public override void Draw()
@@ -54,6 +57,11 @@ namespace EastSharp
 		{
 			base.Update();
 			UpdateCamera(ref backgroundCamera, CameraMode.Orbital);
+		}
+
+		public override void Unload()
+		{
+			base.Unload();
 		}
 	}
 }

@@ -21,5 +21,10 @@ namespace EastSharp
 		{
 			
 		}
+
+		public virtual void Unload()
+		{
+			
+		}
 	}
 }

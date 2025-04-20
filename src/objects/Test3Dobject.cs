@@ -29,5 +29,12 @@ namespace EastSharp
 		{
 			DrawModel(model, Position, 1, Color.White);
 		}
+
+		public override void Unload()
+		{
+			UnloadModel(model);
+			UnloadTexture(bodyTexture);
+			UnloadTexture(mouthTexture);
+		}
 	}
 }

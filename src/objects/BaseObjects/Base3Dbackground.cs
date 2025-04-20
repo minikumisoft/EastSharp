@@ -46,5 +46,13 @@ namespace EastSharp
 		{
 			
 		}
+
+		public virtual void Unload()
+		{
+			for(int i = 0; i < backgroundD3objects.Count; i++)
+			{
+				backgroundD3objects[i].Unload();
+			}
+		}
 	}
 }

@@ -52,5 +52,11 @@ namespace EastSharp
 
 			Vector2.Normalize(Position);
 		}
+
+		public override void Unload()
+		{
+			base.Unload();
+			UnloadTexture(playerTexture);
+		}
 	}
 }

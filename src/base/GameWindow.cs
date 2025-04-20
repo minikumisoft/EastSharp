@@ -24,6 +24,8 @@ namespace EastSharp
 				MainDraw();
 				MainUpdate();
 			}
+			screen.Unload();
+			CloseWindow();
 		}
 
 		private static void MainDraw()
