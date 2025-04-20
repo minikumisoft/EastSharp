@@ -11,6 +11,7 @@ namespace EastSharp
 		public static void Run()
 		{
 			InitWindow(800, 600, "EastSharp");
+			//ToggleFullscreen();
 			SetTargetFPS(60);
 			screen = new TestScreen();
 			MainLoop(); 

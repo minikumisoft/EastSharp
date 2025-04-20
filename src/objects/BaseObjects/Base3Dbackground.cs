@@ -10,6 +10,7 @@ namespace EastSharp
 		public Model backgroundModel;
 		public Camera3D backgroundCamera;
 		public Shader baseShader = LoadShader("assets/shaders/lighting.vs", "assets/shaders/fog.fs");
+		public float fogDestiny{get; set;}
 
 		public void InitShaders()
 		{
@@ -19,11 +20,19 @@ namespace EastSharp
 			int ambientLoc = GetShaderLocation(baseShader, "ambient");
 			SetShaderValue(baseShader, ambientLoc, new float[] {0.2f, 0.2f, 0.2f, 1.0f}, ShaderUniformDataType.Vec4);
 
-			float fogDestiny = 0.15f;
 			int fogDestinyLoc = GetShaderLocation(baseShader, "fogDestiny");
 			SetShaderValue(baseShader, fogDestinyLoc, fogDestiny, ShaderUniformDataType.Float);
 
 			SetMaterialShader(ref backgroundModel, 0, ref baseShader);
+		}
+
+		public void UpdateShaders()
+		{
+			int ambientLoc = GetShaderLocation(baseShader, "ambient");
+			SetShaderValue(baseShader, ambientLoc, new float[] {0.0f, 1.0f, 0.0f, 1.0f}, ShaderUniformDataType.Vec4);
+
+			int fogDestinyLoc = GetShaderLocation(baseShader, "fogDestiny");
+			SetShaderValue(baseShader, fogDestinyLoc, fogDestiny, ShaderUniformDataType.Float);
 		}
 
 		public virtual void Draw()

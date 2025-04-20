@@ -13,7 +13,7 @@ namespace EastSharp
 
 		public TestBackground()
 		{
-			backgroundCamera.Position = new Vector3(10, 10, 10);
+			backgroundCamera.Position = new Vector3(10, 2, 10);
 			backgroundCamera.Target = new Vector3(0, 0, 0);
 			backgroundCamera.Up = new Vector3(0, 1, 0);
 			backgroundCamera.FovY = 45;
@@ -22,8 +22,9 @@ namespace EastSharp
 			testImage = GenImageChecked(100, 100, 10, 10, Color.White, Color.Blue);
 			testTexture = LoadTextureFromImage(testImage);
 
-			backgroundModel = LoadModelFromMesh(GenMeshPlane(10, 10, 1, 1));
+			backgroundModel = LoadModelFromMesh(GenMeshPlane(200, 200, 1, 1));
 			SetMaterialTexture(ref backgroundModel, 0, MaterialMapIndex.Albedo, ref testTexture);
+			fogDestiny = 0.50f;
 			
 			// baseShader.Locs[(int)ShaderLocationIndex.MatrixModel] = GetShaderLocation(baseShader, "matModel");
 			// baseShader.Locs[(int)ShaderLocationIndex.VectorView] = GetShaderLocation(baseShader, "viewPos");
@@ -38,7 +39,7 @@ namespace EastSharp
 			// SetMaterialShader(ref backgroundModel, 0, ref baseShader);
 			InitShaders();
 
-			Rlights.CreateLight(0, LightType.Point, new Vector3(0, 0.2f, 0), Vector3.Zero, Color.Blue, baseShader);
+			Rlights.CreateLight(0, LightType.Point, new Vector3(0, 0.2f, 0), Vector3.Zero, Color.White, baseShader);
 		}
 
 		public override void Draw()
@@ -51,7 +52,7 @@ namespace EastSharp
 		public override void Update()
 		{
 			base.Update();
-			UpdateCamera(ref backgroundCamera, CameraMode.Free);
+			UpdateCamera(ref backgroundCamera, CameraMode.Orbital);
 		}
 	}
 }

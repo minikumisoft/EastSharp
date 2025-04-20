@@ -10,10 +10,14 @@ namespace EastSharp
 	{
 		private PlayerObject player;
 		private D3background testBackground;
+
+		private Texture2D logoDebugTexture;
+
 		public TestInGameScreen()
 		{
 			player = new PlayerObject(new Vector2(10, 10));
 			testBackground = new TestBackground();
+			logoDebugTexture = LoadTexture("eastSharp.png");
 		}
 
 		public override void Draw()
@@ -23,6 +27,11 @@ namespace EastSharp
 				ClearBackground(Color.Gray);
 				testBackground.Draw();
 				player.Draw();
+				if(Debug.Debugging)
+				{
+					DrawTextureEx(logoDebugTexture, new Vector2(12, 12), 0, 0.2f, Color.Black);
+					DrawTextureEx(logoDebugTexture, new Vector2(10, 10), 0, 0.2f, Color.White);
+				}
 			EndTextureMode();
 
 			DrawTexturePro(renderTexture.Texture, new Rectangle(0, 0, GSCREENW, -GSCREENH), new Rectangle(25, 25, GSCREENW, GSCREENH), new Vector2(0, 0), 0, Color.White);
