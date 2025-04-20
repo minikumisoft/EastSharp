@@ -11,7 +11,7 @@ namespace EastSharp
 		public static void Run()
 		{
 			InitWindow(800, 600, "EastSharp");
-			//ToggleFullscreen();
+			ToggleFullscreen();
 			SetTargetFPS(60);
 			screen = new TestScreen();
 			MainLoop(); 
@@ -46,6 +46,11 @@ namespace EastSharp
 				{
 					Debug.Debugging = false;
 				}
+			}
+
+			if(Debug.Debugging)
+			{
+				SetMousePosition(800/2, 600/2);
 			}
 		}
 

@@ -33,7 +33,6 @@ namespace EastSharp
 		public override void Update()
 		{
 			base.Update();
-			time++;
 		}
 
 		public override void Unload()
