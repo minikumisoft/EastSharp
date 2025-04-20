@@ -58,6 +58,7 @@ namespace EastSharp
 			UpdateCamera(ref backgroundCamera, CameraMode.Custom);
 
 			backgroundCamera.Target = new Vector3(0, 0, MathF.Cos(time / 60));
+			backgroundCamera.Up = new Vector3(0, 1, 0 + 0.05f * MathF.Cos(time / 60));
 			// for(int i = 0; i < backgroundD3objects.Count; i++)
 			// {
 			// 	if(backgroundD3objects[i].Position.X == -100)
