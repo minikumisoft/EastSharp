@@ -23,8 +23,8 @@ namespace EastSharp
 
 			backgroundD3objects.Add(new Test3Dobject(new Vector3(0, 0, 0), baseShader));
 
-			backgroundD3objects.Add(new Box3DObjectTest(new Vector3(5, 0, 0), baseShader));
-			for(int i = 0; i < 100; i++)
+			//backgroundD3objects.Add(new Box3DObjectTest(new Vector3(5, 0, 0), baseShader));
+			for(int i = 0; i < 50; i++)
 			{
 				backgroundD3objects.Add(new Box3DObjectTest(new Vector3(rand.Next(-10, 10), rand.Next(-10, 10), rand.Next(-10, 10)), baseShader));
 			}
@@ -44,6 +44,7 @@ namespace EastSharp
 			// SetMaterialShader(ref backgroundModel, 0, ref baseShader);
 
 			Rlights.CreateLight(0, LightType.Point, new Vector3(2, 2, 0), Vector3.Zero, Color.White, baseShader);
+			Rlights.CreateLight(1, LightType.Directorional, new Vector3(30, 30, 30), new Vector3(0, 0, 0), Color.Orange, baseShader);
 		}
 
 		public override void Draw()

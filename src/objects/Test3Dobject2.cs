@@ -8,13 +8,11 @@ namespace EastSharp
 	class Box3DObjectTest : D3object
 	{
 		private Texture2D textureA;
-		private Texture2D textureB;
-
+		
 		public Box3DObjectTest(Vector3 pos, Shader shader)
 		{
 			model = LoadModel("assets/models/WoodBox/WoodBox.obj");
 			textureA = LoadTexture("assets/models/WoodBox/cmn_woodbox01_dfsp_a.png");
-			textureB = LoadTexture("assets/models/WoodBox/cmn_woodbox02_dfsp_a.png");
 
 			SetMaterialTexture(ref model, 0, MaterialMapIndex.Albedo, ref textureA);
 			
@@ -33,7 +31,6 @@ namespace EastSharp
 		{
 			UnloadModel(model);
 			UnloadTexture(textureA);
-			UnloadTexture(textureB);
 		}
 	}
 }

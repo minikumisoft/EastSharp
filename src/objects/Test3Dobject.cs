@@ -17,7 +17,7 @@ namespace EastSharp
 			mouthTexture = LoadTexture("assets/models/marisa/mouth_smile.png");
 			
 			SetMaterialTexture(ref model, 2, MaterialMapIndex.Albedo, ref bodyTexture);
-			SetMaterialTexture(ref model, 0, MaterialMapIndex.Albedo, ref bodyTexture);
+			SetMaterialTexture(ref model, 0, MaterialMapIndex.Albedo, ref mouthTexture);
 			SetMaterialShader(ref model, 0, ref shader);
 			SetMaterialShader(ref model, 1, ref shader);
 			SetMaterialShader(ref model, 2, ref shader);

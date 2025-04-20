@@ -31,6 +31,7 @@ namespace EastSharp
 				{
 					DrawTextureEx(logoDebugTexture, new Vector2(12, 12), 0, 0.2f, Color.Black);
 					DrawTextureEx(logoDebugTexture, new Vector2(10, 10), 0, 0.2f, Color.White);
+					DrawText("FPS: " + GetFPS(), 10, 90, 20, Color.White);
 				}
 			EndTextureMode();
 
