@@ -9,21 +9,29 @@ namespace EastSharp
 	{
 		private Texture2D playerTexture;
 		private float playerSpeed;
+		public List<Bullet> playerBullet;
 
 		public PlayerObject(Vector2 position)
 		{
 			Position = position;
 			playerTexture = LoadTexture("assets/images/91685.png");
 			playerSpeed = 3;
+			playerBullet = new List<Bullet>();
 		}
 
 		public override void Draw()
 		{
 			DrawTexturePro(playerTexture, new Rectangle(0, 0, 34, 48), new Rectangle(Position.X, Position.Y, 34, 48), new Vector2(0, 0), 0, Color.White);
+
+			for(int i = 0; i < playerBullet.Count(); i++)
+			{
+				playerBullet[i].Draw();
+			}
+
 			if(Debug.Debugging)
 			{
 				DrawCircleV(new Vector2(Position.X + 17, Position.Y + 25), 5, new Color(45, 127, 222, 200));
-				DrawText($"Pos: {Position}", (int)Position.X, (int)Position.Y, 10, Color.White);
+				DrawText($"Pos: {Position}\nBullets: {playerBullet.Count}", (int)Position.X, (int)Position.Y, 10, Color.White);
 			}
 		}
 
@@ -31,6 +39,18 @@ namespace EastSharp
 		{
 			HandleInput();
 			CheckCorners();
+			playerBullet.Add(new Bullet(Position, 5, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
+
+
+			for(int i = 0; i < playerBullet.Count(); i++)
+			{
+				playerBullet[i].Update();
+				if(playerBullet[i].Position.Y < 0)
+				{
+					playerBullet[i].Unload();
+					playerBullet.Remove(playerBullet[i]);
+				}
+			}
 
 			Vector2.Normalize(Position);
 		}
