@@ -13,6 +13,8 @@ namespace EastSharp
 
 	class Bullet : BaseObject
 	{
+		private BulletType bulletType;
+
 		private Texture2D texture;
 		private Rectangle textureRect;
 		private float textureRotation;
@@ -25,7 +27,8 @@ namespace EastSharp
 
 		public Bullet(Vector2 pos, int speed, float angle, BulletType type)
 		{
-			switch(type)
+			bulletType = type;
+			switch(bulletType)
 			{
 				case BulletType.PlayerBulletCard:
 					texture = LoadTexture("assets/images/91685.png");
@@ -44,7 +47,9 @@ namespace EastSharp
 		public override void Draw()
 		{
 			base.Draw();
+			BeginBlendMode(BlendMode.Additive);
 			DrawTexturePro(texture, textureRect, new Rectangle(Position.X, Position.Y, textureRect.Width, textureRect.Height), new Vector2(textureRect.Width/2, textureRect.Height/2), textureRotation, Color.White);
+			EndBlendMode();
 			if(Debug.Debugging)
 			{
 				DrawRectangleRec(collision, new Color(45, 127, 222, 200));
@@ -69,7 +74,12 @@ namespace EastSharp
 
 		private void UpdateCollision()
 		{
-			collision = new Rectangle(Position, collision.Width, collision.Height);
+			switch(bulletType)
+			{
+				case BulletType.PlayerBulletCard:
+				collision = new Rectangle(Position.X - 5, Position.Y - 35, collision.Width, collision.Height);
+				break;
+			}
 		}
 	}
 }

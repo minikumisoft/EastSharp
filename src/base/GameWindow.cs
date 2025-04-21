@@ -52,6 +52,11 @@ namespace EastSharp
 			{
 				//SetMousePosition(800/2, 600/2);
 			}
+
+			if(IsKeyPressed(KeyboardKey.F11))
+			{
+				ToggleFullscreen();
+			}
 		}
 
 		public static void ChangeScreen(BaseScreen newScreen)

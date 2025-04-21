@@ -9,10 +9,12 @@ namespace EastSharp
 	{
 		private Texture2D playerTexture;
 		private float playerSpeed;
+		private float shootCooldown;
 		public List<Bullet> playerBullet;
 
 		public PlayerObject(Vector2 position)
 		{
+			shootCooldown = 5;
 			Position = position;
 			playerTexture = LoadTexture("assets/images/91685.png");
 			playerSpeed = 3;
@@ -39,7 +41,12 @@ namespace EastSharp
 		{
 			HandleInput();
 			CheckCorners();
-			playerBullet.Add(new Bullet(Position, 5, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
+			if(shootCooldown == 0)
+			{
+				shootCooldown = 5;
+				playerBullet.Add(new Bullet(new Vector2(Position.X + 10, Position.Y), 7, YorigamiMath.AngleToRadians(-90 - 2), BulletType.PlayerBulletCard));
+				playerBullet.Add(new Bullet(new Vector2(Position.X + 20, Position.Y), 7, YorigamiMath.AngleToRadians(-90 + 2), BulletType.PlayerBulletCard));
+			}
 
 
 			for(int i = 0; i < playerBullet.Count(); i++)
@@ -82,6 +89,11 @@ namespace EastSharp
 			if(IsKeyDown(KeyboardKey.Right))
 			{
 				Position += new Vector2(1, 0) * playerSpeed;
+			}
+
+			if(IsKeyDown(KeyboardKey.Z))
+			{
+				shootCooldown--;
 			}
 		}
 
