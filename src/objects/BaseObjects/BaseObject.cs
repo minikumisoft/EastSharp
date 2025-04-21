@@ -8,7 +8,6 @@ namespace EastSharp
 	class BaseObject
 	{
 		public Vector2 Position{get; set;}
-		public Rectangle CollisionDetect{get; set;}
 		public bool isCollided{get; set;}
 		public string collidedWith = "";
 

@@ -14,7 +14,7 @@ namespace EastSharp
 		{
 			model = LoadModelFromMesh(GenMeshPlane(100, 50, 1, 1));
 			image = GenImagePerlinNoise(1000, 1000, 0, 0, 5);
-			ImageColorTint(ref image, Color.Orange);
+			ImageColorTint(ref image, Color.Gray);
 			texture = LoadTextureFromImage(image);
 			SetMaterialTexture(ref model, 0, MaterialMapIndex.Albedo, ref texture);
 			//SetMaterialShader(ref model, 0, ref shader);

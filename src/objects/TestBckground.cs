@@ -18,12 +18,11 @@ namespace EastSharp
 
 			//backgroundD3objects.Add(new Test3Dobject(new Vector3(0, 0, 0), baseShader, new Vector3(0, 0, 0)));
 
-			backgroundCamera.Position = new Vector3(30, 30, 0);
+			backgroundCamera.Position = new Vector3(20, 20, 0);
 			backgroundCamera.Target = new Vector3(0, 0, 0);
 			backgroundCamera.Up = new Vector3(0, 1, 0);
 			backgroundCamera.FovY = 45;
 			backgroundCamera.Projection = CameraProjection.Perspective;
-
 			//backgroundD3objects.Add(new Box3DObjectTest(new Vector3(5, 0, 0), baseShader));
 			for(int i = 0; i < 30; i++)
 			{
@@ -40,8 +39,7 @@ namespace EastSharp
 
 			fogDestiny = 0.50f;
 
-			Rlights.CreateLight(0, LightType.Point, new Vector3(2, 2, 0), Vector3.Zero, Color.White, baseShader);
-			Rlights.CreateLight(1, LightType.Directorional, new Vector3(30, 30, 30), new Vector3(0, 0, 0), Color.Orange, baseShader);
+			Rlights.CreateLight(0, LightType.Directorional, new Vector3(30, 30, 30), new Vector3(0, 0, 0), Color.Orange, baseShader);
 		}
 
 		public override void Draw()
@@ -58,26 +56,7 @@ namespace EastSharp
 			UpdateCamera(ref backgroundCamera, CameraMode.Custom);
 
 			backgroundCamera.Target = new Vector3(0, 0, MathF.Cos(time / 60));
-			backgroundCamera.Up = new Vector3(0, 1, 0 + 0.05f * MathF.Cos(time / 60));
-			// for(int i = 0; i < backgroundD3objects.Count; i++)
-			// {
-			// 	if(backgroundD3objects[i].Position.X == -100)
-			// 	{
-			// 		backgroundD3objects[i].Position = new Vector3(10, 0, 0);
-			// 	}
-
-			// 	backgroundD3objects[i].Position = new Vector3(-0.1f, 0, 0);
-
-			// }
-
-			// foreach(Box3DObjectTest box in backgroundD3objects)
-			// {
-			// 	box.Position += new Vector3(0.1f, 0, 0);
-			// 	if(box.Position.X > 20)
-			// 	{
-			// 		box.Position = new Vector3(-40, box.Position.Y, box.Position.Z);
-			// 	}
-			// }
+			backgroundCamera.Up = new Vector3(0, 1, 0 + 0.02f * MathF.Cos(time / 60));
 
 			for(int i = 0; i < backgroundD3objects.Count(); i++)
 			{

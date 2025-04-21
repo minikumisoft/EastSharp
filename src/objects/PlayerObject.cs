@@ -8,7 +8,6 @@ namespace EastSharp
 	class PlayerObject : BaseObject
 	{
 		private Texture2D playerTexture;
-		private Vector2 tTarget;
 		private float playerSpeed;
 
 		public PlayerObject(Vector2 position)
@@ -30,6 +29,21 @@ namespace EastSharp
 
 		public override void Update()
 		{
+			HandleInput();
+			CheckCorners();
+
+			Vector2.Normalize(Position);
+		}
+
+		public override void Unload()
+		{
+			base.Unload();
+			UnloadTexture(playerTexture);
+		}
+
+		// PRIVATE FUNCTIONS
+		private void HandleInput()
+		{
 			if(IsKeyDown(KeyboardKey.Down))
 			{
 				Position += new Vector2(0, 1) * playerSpeed;
@@ -49,14 +63,27 @@ namespace EastSharp
 			{
 				Position += new Vector2(1, 0) * playerSpeed;
 			}
-
-			Vector2.Normalize(Position);
 		}
 
-		public override void Unload()
+		private void CheckCorners()
 		{
-			base.Unload();
-			UnloadTexture(playerTexture);
+			if(Position.X >= 450 - 17)
+			{
+				Position = new Vector2(450 - 17, Position.Y);
+			}
+			else if(Position.X < 0 - 17)
+			{
+				Position = new Vector2(0 - 17, Position.Y); 
+			}
+
+			if(Position.Y >= 540 - 25)
+			{
+				Position = new Vector2(Position.X, 540 - 25);
+			}
+			else if(Position.Y < 0 - 25)
+			{
+				Position = new Vector2(Position.X, 0 - 25);
+			}
 		}
 	}
 }
