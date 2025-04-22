@@ -9,6 +9,7 @@ namespace EastSharp
 	unsafe class TestInGameScreen : InGameScreen
 	{
 		private PlayerObject player;
+		private List<BaseEnemy> enemies;
 		private D3background testBackground;
 
 		private Texture2D logoDebugTexture;
@@ -16,6 +17,9 @@ namespace EastSharp
 		public TestInGameScreen()
 		{
 			player = new PlayerObject(new Vector2(10, 10));
+			enemies = new List<BaseEnemy>();
+			enemies.Add(new TestEnemy(new Vector2(300, 300), 2, BaseEnemy.EnemyMoveType.Static, 20));
+
 			testBackground = new TestBackground();
 			logoDebugTexture = LoadTexture("eastSharp.png");
 		}
@@ -27,6 +31,12 @@ namespace EastSharp
 				ClearBackground(Color.Gray);
 				testBackground.Draw();
 				player.Draw();
+
+				for(int i = 0; i < enemies.Count(); i++)
+				{
+					enemies[i].Draw();
+				}
+
 				if(Debug.Debugging)
 				{
 					DrawTextureEx(logoDebugTexture, new Vector2(12, 12), 0, 0.2f, Color.Black);
@@ -42,6 +52,29 @@ namespace EastSharp
 		{
 			base.Update();
 			player.Update();
+
+			for(int i = 0; i < enemies.Count(); i++)
+			{
+				enemies[i].Update();
+				enemies[i].isCollided = false;
+
+				foreach(Bullet bullet in player.playerBullet)
+				{
+					if(CheckCollisionCircleRec(new Vector2(enemies[i].Position.X + 15, enemies[i].Position.Y + 15), 10, bullet.collision))
+					{
+						enemies[i].HP -= 1;
+						bullet.isDeleted = true;
+					}
+				}
+
+				if(enemies[i].isDeleted)
+				{
+					enemies.Remove(enemies[i]);
+				}
+			}
+
+			
+
 			testBackground.Update();
 		}
 

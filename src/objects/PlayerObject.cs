@@ -44,15 +44,15 @@ namespace EastSharp
 			if(shootCooldown == 0)
 			{
 				shootCooldown = 5;
-				playerBullet.Add(new Bullet(new Vector2(Position.X + 10, Position.Y), 7, YorigamiMath.AngleToRadians(-90 - 2), BulletType.PlayerBulletCard));
-				playerBullet.Add(new Bullet(new Vector2(Position.X + 20, Position.Y), 7, YorigamiMath.AngleToRadians(-90 + 2), BulletType.PlayerBulletCard));
+				playerBullet.Add(new Bullet(new Vector2(Position.X + 10, Position.Y), 10, YorigamiMath.AngleToRadians(-90 - 2), BulletType.PlayerBulletCard));
+				playerBullet.Add(new Bullet(new Vector2(Position.X + 20, Position.Y), 10, YorigamiMath.AngleToRadians(-90 + 2), BulletType.PlayerBulletCard));
 			}
 
 
 			for(int i = 0; i < playerBullet.Count(); i++)
 			{
 				playerBullet[i].Update();
-				if(playerBullet[i].Position.Y < 0)
+				if(playerBullet[i].isDeleted)
 				{
 					playerBullet[i].Unload();
 					playerBullet.Remove(playerBullet[i]);

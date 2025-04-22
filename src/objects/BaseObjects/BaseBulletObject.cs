@@ -25,9 +25,12 @@ namespace EastSharp
 		public bool isPlayerBullet;
 		public Rectangle collision;
 
+		public bool isDeleted;
+
 		public Bullet(Vector2 pos, int speed, float angle, BulletType type)
 		{
 			bulletType = type;
+			isDeleted = false;
 			switch(bulletType)
 			{
 				case BulletType.PlayerBulletCard:
@@ -62,6 +65,11 @@ namespace EastSharp
 			UpdateCollision();
 
 			velocity = new Vector2(MathF.Cos(angle) * speed, MathF.Sin(angle) * speed);
+
+			if(Position.Y < 0 || Position.X < 0 || Position.X >= 450 || Position.Y >= 540)
+			{
+				isDeleted = true;
+			}
 
 			Position += velocity;
 		}
