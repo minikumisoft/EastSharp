@@ -7,7 +7,8 @@ namespace EastSharp
 {
 	enum BulletType
 	{
-		PlayerBulletCard
+		PlayerBulletCard,
+		EnemyBlueMidBall
 	}
 
 
@@ -39,6 +40,14 @@ namespace EastSharp
 					textureRotation = -90;
 					collision = new Rectangle(Position, 10, 20);
 					isPlayerBullet = true;
+				break;
+
+				case BulletType.EnemyBlueMidBall:
+					texture = LoadTexture("assets/images/91834.png");
+					textureRect = new Rectangle(97, 49, 16, 16);
+					textureRotation = 0;
+					collision = new Rectangle(Position, 16, 16);
+					isPlayerBullet = false;
 				break;
 			}
 
@@ -85,7 +94,11 @@ namespace EastSharp
 			switch(bulletType)
 			{
 				case BulletType.PlayerBulletCard:
-				collision = new Rectangle(Position.X - 5, Position.Y - 35, collision.Width, collision.Height);
+					collision = new Rectangle(Position.X - 5, Position.Y - 35, collision.Width, collision.Height);
+				break;
+
+				case BulletType.EnemyBlueMidBall:
+					collision = new Rectangle(Position.X - 7, Position.Y - 7, collision.Width, collision.Height);
 				break;
 			}
 		}

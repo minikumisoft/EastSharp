@@ -10,6 +10,7 @@ namespace EastSharp
 	{
 		private PlayerObject player;
 		private List<BaseEnemy> enemies;
+		private List<Bullet> bullets;
 		private D3background testBackground;
 
 		private Texture2D logoDebugTexture;
@@ -18,7 +19,8 @@ namespace EastSharp
 		{
 			player = new PlayerObject(new Vector2(10, 10));
 			enemies = new List<BaseEnemy>();
-			enemies.Add(new TestEnemy(new Vector2(300, 300), 2, BaseEnemy.EnemyMoveType.Static, 20));
+			bullets = new List<Bullet>();
+			enemies.Add(new TestEnemy(new Vector2(300, 300), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
 
 			testBackground = new TestBackground();
 			logoDebugTexture = LoadTexture("eastSharp.png");
@@ -37,11 +39,16 @@ namespace EastSharp
 					enemies[i].Draw();
 				}
 
+				for(int i = 0; i < bullets.Count(); i++)
+				{
+					bullets[i].Draw();
+				}
+
 				if(Debug.Debugging)
 				{
 					DrawTextureEx(logoDebugTexture, new Vector2(12, 12), 0, 0.2f, Color.Black);
 					DrawTextureEx(logoDebugTexture, new Vector2(10, 10), 0, 0.2f, Color.White);
-					DrawText("FPS: " + GetFPS(), 10, 90, 20, Color.White);
+					DrawText($"FPS: {GetFPS()}\nBulletInScreen: {bullets.Count}", 10, 90, 10, Color.White);
 				}
 			EndTextureMode();
 
@@ -62,8 +69,11 @@ namespace EastSharp
 				{
 					if(CheckCollisionCircleRec(new Vector2(enemies[i].Position.X + 15, enemies[i].Position.Y + 15), 10, bullet.collision))
 					{
-						enemies[i].HP -= 1;
-						bullet.isDeleted = true;
+						if(bullet.isPlayerBullet)
+						{
+							enemies[i].HP -= 1;
+							bullet.isDeleted = true;
+						}
 					}
 				}
 
@@ -73,6 +83,16 @@ namespace EastSharp
 				}
 			}
 
+			for(int i = 0; i < bullets.Count(); i++)
+			{
+				bullets[i].Update();
+
+				if(bullets[i].isDeleted)
+				{
+					bullets[i].Unload();
+					bullets.Remove(bullets[i]);
+				}
+			}
 			
 
 			testBackground.Update();
