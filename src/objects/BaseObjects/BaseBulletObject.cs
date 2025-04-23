@@ -5,15 +5,16 @@ using static Raylib_cs.Raylib;
 
 namespace EastSharp
 {
+
 	enum BulletType
 	{
 		PlayerBulletCard,
 		EnemyBlueMidBall
 	}
 
-
 	class Bullet : BaseObject
 	{
+
 		private BulletType bulletType;
 
 		private Texture2D texture;
@@ -35,15 +36,15 @@ namespace EastSharp
 			switch(bulletType)
 			{
 				case BulletType.PlayerBulletCard:
-					texture = LoadTexture("assets/images/91685.png");
+					texture = GlobalResources.PlayerBulletCardTexture;
 					textureRect = new Rectangle(4, 179, 61, 13);
 					textureRotation = -90;
-					collision = new Rectangle(Position, 10, 20);
+					collision = new Rectangle(Position, 10, 50);
 					isPlayerBullet = true;
 				break;
 
 				case BulletType.EnemyBlueMidBall:
-					texture = LoadTexture("assets/images/91834.png");
+					texture = GlobalResources.EnemyBlueMidBallTexture;
 					textureRect = new Rectangle(97, 49, 16, 16);
 					textureRotation = 0;
 					collision = new Rectangle(Position, 16, 16);
@@ -75,7 +76,7 @@ namespace EastSharp
 
 			velocity = new Vector2(MathF.Cos(angle) * speed, MathF.Sin(angle) * speed);
 
-			if(Position.Y < 0 || Position.X < 0 || Position.X >= 450 || Position.Y >= 540)
+			if(Position.Y < 0 - 200 || Position.X < 0 - 200 || Position.X >= 450 + 200 || Position.Y >= 540 + 200)
 			{
 				isDeleted = true;
 			}
@@ -86,7 +87,7 @@ namespace EastSharp
 		public override void Unload()
 		{
 			base.Unload();
-			UnloadTexture(texture);
+			//UnloadTexture(texture);
 		}
 
 		private void UpdateCollision()

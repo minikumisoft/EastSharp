@@ -39,7 +39,8 @@ namespace EastSharp
 			if(Debug.Debugging)
 			{
 				DrawCircle((int)Position.X + 15, (int)Position.Y + 15, 10, new Color(45, 127, 222, 200));
-				DrawText($"HP: {HP}\nBulletCount: {bullets.Count()}", (int)Position.X, (int)Position.Y, 10, Color.White);
+				// DrawText($"HP: {HP}", (int)Position.X, (int)Position.Y, 10, Color.White);
+				DrawTextEx(GlobalResources.debugFontMidMedium, $"HP: {HP}", Position, 15, 0.5f, Color.White);
 			}
 		}
 
@@ -51,7 +52,11 @@ namespace EastSharp
 			if(cooldown <= 0)
 			{
 				clock += 5;
-				bullets.Add(new Bullet(Position, 5, YorigamiMath.AngleToRadians(clock), BulletType.EnemyBlueMidBall));
+				for(int i = 0; i < 2; i++)
+				{
+					float ang = 360/2;
+					bullets.Add(new Bullet(Position, 2, YorigamiMath.AngleToRadians(i * ang), BulletType.EnemyBlueMidBall));
+				}
 				cooldown = 15;
 			}
 
@@ -70,6 +75,8 @@ namespace EastSharp
 			// 		bullets.Remove(bullets[i]);
 			// 	}
 			// }
+
+			
 		}
 
 		public override void Unload()

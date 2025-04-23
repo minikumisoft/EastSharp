@@ -13,6 +13,7 @@ namespace EastSharp
 
 		public TestScreen()
 		{
+			GlobalResources.InitResources();
 			gameScreen = new TestInGameScreen();
 			logoTexture = LoadTexture("eastSharp.png");
 		}
@@ -23,7 +24,7 @@ namespace EastSharp
 			BeginDrawing();
 			ClearBackground(Color.RayWhite);
 			DrawTextureEx(logoTexture, new Vector2(480, 570), -90, 0.3f, Color.Gray);
-			DrawText($"FPS: {GetFPS()}", 620, 280, 20, Color.Gray);
+			GlobalsAndHud.DrawGameHud();
 			gameScreen.Draw();
 			EndDrawing();
 		}

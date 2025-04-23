@@ -18,8 +18,12 @@ namespace EastSharp
 			player = new PlayerObject(new Vector2(10, 10));
 			enemies = new List<BaseEnemy>();
 			bullets = new List<Bullet>();
-			enemies.Add(new TestEnemy(new Vector2(300, 300), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
-			enemies.Add(new TestEnemy(new Vector2(200, 200), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
+			enemies.Add(new TestEnemy(new Vector2(100, 300), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
+			enemies.Add(new TestEnemy(new Vector2(300, 400), 0.1f, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(-90), bullets));
+			// for(int i = 0; i < 10; i++)
+			// {
+			// 	enemies.Add(new TestEnemy(new Vector2(100 + 15 * i, 300), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
+			// }
 
 			testBackground = new TestBackground();
 		}
@@ -40,6 +44,13 @@ namespace EastSharp
 				for(int i = 0; i < bullets.Count(); i++)
 				{
 					bullets[i].Draw();
+				}
+
+				if(Debug.Debugging)
+				{
+					// DrawText($"BulletCount: {bullets.Count()}", 10, 10, 20, Color.White);
+					DrawTextEx(GlobalResources.debugFontMedium, $"Кількість куль на єкрані: {bullets.Count()}", new Vector2(10+2, 10+2), 20, 0.5f, Color.Black);
+					DrawTextEx(GlobalResources.debugFontMedium, $"Кількість куль на єкрані: {bullets.Count()}", new Vector2(10, 10), 20, 0.5f, Color.White);
 				}
 			EndTextureMode();
 
@@ -64,6 +75,7 @@ namespace EastSharp
 						{
 							enemies[i].HP -= 1;
 							bullet.isDeleted = true;
+							GlobalsAndHud.score += 10;
 						}
 					}
 				}
@@ -77,6 +89,7 @@ namespace EastSharp
 			for(int i = 0; i < bullets.Count(); i++)
 			{
 				bullets[i].Update();
+
 
 				if(bullets[i].isDeleted)
 				{

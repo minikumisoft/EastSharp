@@ -33,7 +33,8 @@ namespace EastSharp
 			if(Debug.Debugging)
 			{
 				DrawCircleV(new Vector2(Position.X + 17, Position.Y + 25), 5, new Color(45, 127, 222, 200));
-				DrawText($"Pos: {Position}\nBullets: {playerBullet.Count}", (int)Position.X, (int)Position.Y, 10, Color.White);
+				// DrawText($"Pos: {Position}\nBullets: {playerBullet.Count}", (int)Position.X, (int)Position.Y, 10, Color.White);
+				DrawTextEx(GlobalResources.debugFontMidMedium, $"Pos: {Position}\nBullets: {playerBullet.Count}", Position, 15, 0.5f, Color.White);
 			}
 		}
 
@@ -44,8 +45,8 @@ namespace EastSharp
 			if(shootCooldown == 0)
 			{
 				shootCooldown = 5;
-				playerBullet.Add(new Bullet(new Vector2(Position.X + 10, Position.Y), 10, YorigamiMath.AngleToRadians(-90 - 2), BulletType.PlayerBulletCard));
-				playerBullet.Add(new Bullet(new Vector2(Position.X + 20, Position.Y), 10, YorigamiMath.AngleToRadians(-90 + 2), BulletType.PlayerBulletCard));
+				playerBullet.Add(new Bullet(new Vector2(Position.X + 10, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
+				playerBullet.Add(new Bullet(new Vector2(Position.X + 25, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
 			}
 
 

@@ -41,11 +41,8 @@ namespace EastSharp
 			switch(enemyMoveType)
 			{
 				case EnemyMoveType.LinearMove:
+					velocity = new Vector2(MathF.Cos(angle) * speed, MathF.Sin(angle) * speed);
 					Position += velocity;
-				break;
-
-				default:
-					enemyMoveType = EnemyMoveType.Static;
 				break;
 			}
 		}
