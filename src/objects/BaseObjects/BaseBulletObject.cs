@@ -59,9 +59,9 @@ namespace EastSharp
 		public override void Draw()
 		{
 			base.Draw();
-			BeginBlendMode(BlendMode.Additive);
+			//BeginBlendMode(BlendMode.Additive);
 			DrawTexturePro(texture, textureRect, new Rectangle(Position.X, Position.Y, textureRect.Width, textureRect.Height), new Vector2(textureRect.Width/2, textureRect.Height/2), textureRotation, Color.White);
-			EndBlendMode();
+			//EndBlendMode();
 			if(Debug.Debugging)
 			{
 				DrawRectangleRec(collision, new Color(45, 127, 222, 200));

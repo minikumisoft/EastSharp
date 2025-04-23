@@ -19,6 +19,7 @@ namespace EastSharp
 			enemies = new List<BaseEnemy>();
 			bullets = new List<Bullet>();
 			enemies.Add(new TestEnemy(new Vector2(300, 300), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
+			enemies.Add(new TestEnemy(new Vector2(200, 200), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
 
 			testBackground = new TestBackground();
 		}

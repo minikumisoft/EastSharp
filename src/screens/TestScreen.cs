@@ -14,7 +14,7 @@ namespace EastSharp
 		public TestScreen()
 		{
 			gameScreen = new TestInGameScreen();
-			logoTexture = LoadTexture("eastSharpEng.png");
+			logoTexture = LoadTexture("eastSharp.png");
 		}
 
 		public override void Draw()
