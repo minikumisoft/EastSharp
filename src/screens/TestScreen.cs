@@ -9,9 +9,12 @@ namespace EastSharp
 	{
 		private InGameScreen gameScreen;
 
+		private Texture2D logoTexture;
+
 		public TestScreen()
 		{
 			gameScreen = new TestInGameScreen();
+			logoTexture = LoadTexture("eastSharpEng.png");
 		}
 
 		public override void Draw()
@@ -19,6 +22,8 @@ namespace EastSharp
 			base.Draw();
 			BeginDrawing();
 			ClearBackground(Color.RayWhite);
+			DrawTextureEx(logoTexture, new Vector2(480, 570), -90, 0.3f, Color.Gray);
+			DrawText($"FPS: {GetFPS()}", 620, 280, 20, Color.Gray);
 			gameScreen.Draw();
 			EndDrawing();
 		}

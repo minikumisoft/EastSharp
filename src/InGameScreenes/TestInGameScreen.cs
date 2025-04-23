@@ -13,8 +13,6 @@ namespace EastSharp
 		private List<Bullet> bullets;
 		private D3background testBackground;
 
-		private Texture2D logoDebugTexture;
-
 		public TestInGameScreen()
 		{
 			player = new PlayerObject(new Vector2(10, 10));
@@ -23,7 +21,6 @@ namespace EastSharp
 			enemies.Add(new TestEnemy(new Vector2(300, 300), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
 
 			testBackground = new TestBackground();
-			logoDebugTexture = LoadTexture("eastSharp.png");
 		}
 
 		public override void Draw()
@@ -42,13 +39,6 @@ namespace EastSharp
 				for(int i = 0; i < bullets.Count(); i++)
 				{
 					bullets[i].Draw();
-				}
-
-				if(Debug.Debugging)
-				{
-					DrawTextureEx(logoDebugTexture, new Vector2(12, 12), 0, 0.2f, Color.Black);
-					DrawTextureEx(logoDebugTexture, new Vector2(10, 10), 0, 0.2f, Color.White);
-					DrawText($"FPS: {GetFPS()}\nBulletInScreen: {bullets.Count}", 10, 90, 10, Color.White);
 				}
 			EndTextureMode();
 
@@ -103,7 +93,6 @@ namespace EastSharp
 			base.Unload();
 			testBackground.Unload();
 			player.Unload();
-			UnloadTexture(logoDebugTexture);
 		}
 	}
 }
