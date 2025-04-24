@@ -52,9 +52,9 @@ namespace EastSharp
 			if(cooldown <= 0)
 			{
 				clock += 5;
-				for(int i = 0; i < 2; i++)
+				for(int i = 0; i < 25; i++)
 				{
-					float ang = 360/2;
+					float ang = 360/25;
 					bullets.Add(new Bullet(Position, 2, YorigamiMath.AngleToRadians(i * ang), BulletType.EnemyBlueMidBall));
 				}
 				cooldown = 15;
