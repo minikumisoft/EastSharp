@@ -11,6 +11,7 @@ namespace EastSharp
 		private float playerSpeed;
 		private float shootCooldown;
 		public List<Bullet> playerBullet;
+		public Color debugColor;
 
 		public PlayerObject(Vector2 position)
 		{
@@ -18,6 +19,7 @@ namespace EastSharp
 			Position = position;
 			playerTexture = LoadTexture("assets/images/91685.png");
 			playerSpeed = 3;
+			debugColor = new Color(127, 127, 127, 200);
 			playerBullet = new List<Bullet>();
 		}
 
@@ -32,6 +34,7 @@ namespace EastSharp
 
 			if(Debug.Debugging)
 			{
+				DrawCircleV(new Vector2(Position.X + 17, Position.Y + 25), 75, debugColor);
 				DrawCircleV(new Vector2(Position.X + 17, Position.Y + 25), 5, new Color(45, 127, 222, 200));
 				// DrawText($"Pos: {Position}\nBullets: {playerBullet.Count}", (int)Position.X, (int)Position.Y, 10, Color.White);
 				DrawTextEx(GlobalResources.debugFontMidMedium, $"Pos: {Position}\nBullets: {playerBullet.Count}", Position, 15, 0.5f, Color.White);
@@ -42,6 +45,7 @@ namespace EastSharp
 		{
 			HandleInput();
 			CheckCorners();
+			CollisionHandle();
 			if(shootCooldown == 0)
 			{
 				shootCooldown = 5;
@@ -116,6 +120,18 @@ namespace EastSharp
 			else if(Position.Y < 0 - 25)
 			{
 				Position = new Vector2(Position.X, 0 - 25);
+			}
+		}
+
+		private void CollisionHandle()
+		{
+			if(isCollided && collidedWith == "Point")
+			{
+				debugColor = new Color(157, 157, 157, 200);
+			}
+			else
+			{
+				debugColor = new Color(127, 127, 127, 200);
 			}
 		}
 	}

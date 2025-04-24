@@ -6,10 +6,15 @@ namespace EastSharp
 {
 	static class GameWindow
 	{
+		public static int gameWindowWidth = 800;
+        public static int gameWindowHeight = 600;
+
+
 		private static BaseScreen screen;
 
 		public static void Run()
 		{
+			SetConfigFlags(ConfigFlags.ResizableWindow);
 			InitWindow(800, 600, "EastSharp");
 			//ToggleFullscreen();
 			SetTargetFPS(60);

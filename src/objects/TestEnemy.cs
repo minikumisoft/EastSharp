@@ -10,12 +10,15 @@ namespace EastSharp
 
 		private float clock;
 		private float cooldown;
+		private RTimer shootCooldown;
 
 		public TestEnemy(Vector2 pos, float speed, EnemyMoveType type, float angle, List<Bullet> bul)
 		{
 			cooldown = 60;
+			shootCooldown = new RTimer();
+			shootCooldown.StartTimer(10);
 			clock = 0;
-			HP = 100;
+			HP = 25;
 			isDeleted = false;
 			bullets = bul;
 			texture = LoadTexture("assets/images/enemies/faily_blue.png");
@@ -48,16 +51,15 @@ namespace EastSharp
 		{
 			base.Update();
 			cooldown--;
-
-			if(cooldown <= 0)
+			
+			if(shootCooldown.TimerDone())
 			{
-				clock += 5;
-				for(int i = 0; i < 25; i++)
+				for(int i = 0; i < 26; i++)
 				{
 					float ang = 360/25;
 					bullets.Add(new Bullet(Position, 2, YorigamiMath.AngleToRadians(i * ang), BulletType.EnemyBlueMidBall));
 				}
-				cooldown = 15;
+				shootCooldown.StartTimer(1);
 			}
 
 			if(clock >= 360)

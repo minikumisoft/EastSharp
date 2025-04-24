@@ -9,6 +9,7 @@ namespace EastSharp
 	{
 		private InGameScreen gameScreen;
 
+
 		private Texture2D logoTexture;
 
 		public TestScreen()
