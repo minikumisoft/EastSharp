@@ -17,7 +17,7 @@ namespace EastSharp
 		{
 			shootCooldown = 5;
 			Position = position;
-			playerTexture = LoadTexture("assets/images/91685.png");
+			playerTexture = GlobalResources.reimuTexture;
 			playerSpeed = 3;
 			debugColor = new Color(127, 127, 127, 200);
 			playerBullet = new List<Bullet>();
@@ -71,7 +71,6 @@ namespace EastSharp
 		public override void Unload()
 		{
 			base.Unload();
-			UnloadTexture(playerTexture);
 		}
 
 		// PRIVATE FUNCTIONS

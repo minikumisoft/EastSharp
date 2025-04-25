@@ -7,6 +7,9 @@ namespace EastSharp
 {
 	class InGameScreen
 	{
+
+		public TestScreen baseScreen;
+
 		public const int GSCREENW = 450;
 		public const int GSCREENH = 540;
 

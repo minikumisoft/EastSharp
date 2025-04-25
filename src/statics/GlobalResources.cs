@@ -7,8 +7,16 @@ namespace EastSharp
 	static class GlobalResources
 	{
 
+		public static Texture2D eastSharpLogoTexture;
+
 		public static Texture2D PlayerBulletCardTexture;
 		public static Texture2D EnemyBlueMidBallTexture;
+		public static Texture2D cloudTexture;
+		public static Texture2D woodBoxTexture;
+		public static Texture2D reimuTexture;
+		public static Texture2D enemyBlue;
+
+		public static Image cloudImage;
 
 		private static int[] codepoints;
 		public static Font debugFontSmall;
@@ -23,10 +31,21 @@ namespace EastSharp
 		public static Sound enemyDeath;
 		public static Sound playerShot;
 
+		public static Model cloudModel;
+		public static Model woodBoxModel;
+
+		public static Shader baseShader;
+
 		public static void InitResources()
 		{
+			eastSharpLogoTexture = LoadTexture("eastSharp.png");
 			PlayerBulletCardTexture = LoadTexture("assets/images/91685.png");
 			EnemyBlueMidBallTexture = LoadTexture("assets/images/91834.png");
+			reimuTexture = LoadTexture("assets/images/91685.png");
+			cloudImage = GenImagePerlinNoise(1000, 1000, 0, 0, 5);
+			cloudTexture = LoadTextureFromImage(cloudImage);
+			woodBoxTexture = LoadTexture("assets/models/WoodBox/cmn_woodbox01_dfsp_a.png");
+			enemyBlue = LoadTexture("assets/images/enemies/faily_blue.png");
 
 			codepoints = new int[512];
             for(int i = 0; i < 95; i++)
@@ -51,12 +70,35 @@ namespace EastSharp
 			itemCollectSound = LoadSound("assets/audio/THSSounds/se_item00.wav");
 			enemyDeath = LoadSound("assets/audio/THSSounds/se_enep00.wav");
 			playerShot = LoadSound("assets/audio/THSSounds/se_plst00.wav");
+
+			cloudModel = LoadModelFromMesh(GenMeshPlane(100, 50, 1, 1));
+			woodBoxModel = LoadModel("assets/models/WoodBox/WoodBox.obj");
+
+			baseShader = LoadShader("assets/shaders/lighting.vs", "assets/shaders/fog.fs");
 		}
 
 		public static void Unload()
 		{
+			UnloadTexture(eastSharpLogoTexture);
 			UnloadTexture(PlayerBulletCardTexture);
 			UnloadTexture(EnemyBlueMidBallTexture);
+			UnloadTexture(cloudTexture);
+			UnloadTexture(reimuTexture);
+			UnloadTexture(woodBoxTexture);
+			UnloadTexture(enemyBlue);
+
+			UnloadImage(cloudImage);
+
+			UnloadFont(debugFontSmall);
+			UnloadFont(debugFontMidMedium);
+			UnloadFont(debugFontMedium);
+			UnloadFont(debugFontLarge);
+			UnloadFont(debugFontLargeItalic);
+			UnloadMusicStream(yorigamiMusic);
+
+			UnloadSound(itemCollectSound);
+			UnloadSound(enemyDeath);
+			UnloadSound(playerShot);
 		}
 	}
 }

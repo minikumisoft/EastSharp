@@ -12,6 +12,7 @@ namespace EastSharp
 
 		public Test3Dobject(Vector3 pos, Shader shader, Vector3 rotation)
 		{
+			isUnload = false;
 			model = LoadModel("assets/models/marisa/Marisa_Kirisame.obj");
 			bodyTexture = LoadTexture("assets/models/marisa/marisa.png");
 			mouthTexture = LoadTexture("assets/models/marisa/mouth_smile.png");
@@ -28,12 +29,16 @@ namespace EastSharp
 
 		public override void Draw()
 		{
-			DrawModelEx(model, Position, Rotation, Rotation.X + Rotation.Y + Rotation.Z, new Vector3(1, 1, 1), Color.White);
+			if(isUnload == false)
+			{
+				DrawModelEx(model, Position, Rotation, Rotation.X + Rotation.Y + Rotation.Z, new Vector3(1, 1, 1), Color.White);
+			}
 		}
 
 		public override void Unload()
 		{
-			UnloadModel(model);
+			isUnload = true;
+			//UnloadModel(model);
 			UnloadTexture(bodyTexture);
 			UnloadTexture(mouthTexture);
 		}

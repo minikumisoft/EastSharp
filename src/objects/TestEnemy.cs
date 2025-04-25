@@ -16,12 +16,12 @@ namespace EastSharp
 		{
 			cooldown = 60;
 			shootCooldown = new RTimer();
-			shootCooldown.StartTimer(10);
+			shootCooldown.StartTimer(0.5);
 			clock = 0;
-			HP = 25;
+			HP = 2;
 			isDeleted = false;
 			bullets = bul;
-			texture = LoadTexture("assets/images/enemies/faily_blue.png");
+			texture = GlobalResources.enemyBlue;
 			textureRect = new Rectangle(1, 1, 29, 29);
 			Position = pos;
 			enemyMoveType = type;

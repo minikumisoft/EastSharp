@@ -12,10 +12,11 @@ namespace EastSharp
 
 		public Clouds3D(Vector3 pos, Shader shader, Vector3 rotation)
 		{
-			model = LoadModelFromMesh(GenMeshPlane(100, 50, 1, 1));
-			image = GenImagePerlinNoise(1000, 1000, 0, 0, 5);
-			ImageColorTint(ref image, Color.Gray);
-			texture = LoadTextureFromImage(image);
+			isUnload = false;
+			model = GlobalResources.cloudModel;
+			image = GlobalResources.cloudImage;
+			//ImageColorTint(ref image, Color.Gray);
+			texture = GlobalResources.cloudTexture;
 			SetMaterialTexture(ref model, 0, MaterialMapIndex.Albedo, ref texture);
 			//SetMaterialShader(ref model, 0, ref shader);
 			Position = pos;
@@ -25,7 +26,10 @@ namespace EastSharp
 		public override void Draw()
 		{
 			BeginBlendMode(BlendMode.Additive);
-				DrawModelEx(model, Position, Rotation, Rotation.X + Rotation.Y + Rotation.Z, new Vector3(1, 1, 1), Color.White);
+				if(isUnload == false)
+				{
+					DrawModelEx(model, Position, Rotation, Rotation.X + Rotation.Y + Rotation.Z, new Vector3(1, 1, 1), Color.White);
+				}
 			EndBlendMode();
 		}
 

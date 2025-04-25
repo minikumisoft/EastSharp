@@ -10,6 +10,7 @@ namespace EastSharp
 		public Model model;
 		public Vector3 Position{get; set;}
 		public Vector3 Rotation{get; set;}
+		public bool isUnload{get; set;}
 
 		public virtual void Draw()
 		{

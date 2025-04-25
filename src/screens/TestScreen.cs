@@ -7,7 +7,7 @@ namespace EastSharp
 {
 	class TestScreen : BaseScreen
 	{
-		private InGameScreen gameScreen;
+		public InGameScreen gameScreen;
 
 
 		private Texture2D logoTexture;
@@ -15,8 +15,8 @@ namespace EastSharp
 		public TestScreen()
 		{
 			GlobalResources.InitResources();
-			gameScreen = new TestInGameScreen();
-			logoTexture = LoadTexture("eastSharp.png");
+			gameScreen = new TestInGameScreen(this);
+			logoTexture = GlobalResources.eastSharpLogoTexture;
 		}
 
 		public override void Draw()
@@ -40,6 +40,7 @@ namespace EastSharp
 		{
 			base.Unload();
 			gameScreen.Unload();
+			GlobalResources.Unload();
 		}
 	}
 }

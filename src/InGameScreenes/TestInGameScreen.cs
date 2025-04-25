@@ -15,20 +15,23 @@ namespace EastSharp
 		private List<Item> items;
 		private D3background testBackground;
 
-		public TestInGameScreen()
+		public TestInGameScreen(TestScreen screen)
 		{
+
+			baseScreen = screen;
+
 			PlayMusicStream(GlobalResources.yorigamiMusic);
 			rand = new Random();
 			player = new PlayerObject(new Vector2(10, 10));
 			enemies = new List<BaseEnemy>();
 			bullets = new List<Bullet>();
 			items = new List<Item>();
-			enemies.Add(new TestEnemy(new Vector2(100, 300), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
-			enemies.Add(new TestEnemy(new Vector2(300, 400), 0.1f, BaseEnemy.EnemyMoveType.Static, YorigamiMath.AngleToRadians(-90), bullets));
-			// for(int i = 0; i < 10; i++)
-			// {
-			// 	enemies.Add(new TestEnemy(new Vector2(100 + 15 * i, 300), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
-			// }
+			enemies.Add(new TestEnemy(new Vector2(GSCREENW/2, GSCREENH/2), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
+			//enemies.Add(new TestEnemy(new Vector2(300, 400), 0.1f, BaseEnemy.EnemyMoveType.Static, YorigamiMath.AngleToRadians(-90), bullets));
+			for(int i = 0; i < 3; i++)
+			{
+				enemies.Add(new TestEnemy(new Vector2((GSCREENW/2) + 15 * i, GSCREENH/2), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
+			}
 
 			testBackground = new TestBackground();
 		}
@@ -59,8 +62,8 @@ namespace EastSharp
 				if(Debug.Debugging)
 				{
 					// DrawText($"BulletCount: {bullets.Count()}", 10, 10, 20, Color.White);
-					DrawTextEx(GlobalResources.debugFontMedium, $"Кількість куль на єкрані: {bullets.Count()}", new Vector2(10+2, 10+2), 20, 0.5f, Color.Black);
-					DrawTextEx(GlobalResources.debugFontMedium, $"Кількість куль на єкрані: {bullets.Count()}", new Vector2(10, 10), 20, 0.5f, Color.White);
+					DrawTextEx(GlobalResources.debugFontMedium, $"Кількість куль на єкрані: {bullets.Count()}\nКількість предметів на єкрані: {items.Count()}", new Vector2(10+2, 10+2), 20, 0.5f, Color.Black);
+					DrawTextEx(GlobalResources.debugFontMedium, $"Кількість куль на єкрані: {bullets.Count()}\nКількість предметів на єкрані: {items.Count()}", new Vector2(10, 10), 20, 0.5f, Color.White);
 				}
 			EndTextureMode();
 
@@ -96,9 +99,9 @@ namespace EastSharp
 				if(enemies[i].isDeleted)
 				{
 					PlaySound(GlobalResources.enemyDeath);
-					for(int k = 0; k < 10; k++)
+					for(int k = 0; k < 10000; k++)
 					{
-						items.Add(new PointItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 30, (int)enemies[i].Position.X + 30), enemies[i].Position.Y), YorigamiMath.GetRandomNumber(-2f, -3f)));
+						items.Add(new PointItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 100, (int)enemies[i].Position.X + 100), enemies[i].Position.Y), YorigamiMath.GetRandomNumber(-2f, -5f)));
 					}
 					enemies.Remove(enemies[i]);
 				}
@@ -146,6 +149,12 @@ namespace EastSharp
 				items.Add(new PointItem(new Vector2(player.Position.X, player.Position.Y - 100), YorigamiMath.GetRandomNumber(-2f, -3f)));
 			}
 
+			if(IsKeyPressed(KeyboardKey.R))
+			{
+				Unload();
+				baseScreen.gameScreen = new TestInGameScreen(baseScreen);
+			}
+
 			UpdateMusicStream(GlobalResources.yorigamiMusic);
 			
 			testBackground.Update();
@@ -156,6 +165,7 @@ namespace EastSharp
 			base.Unload();
 			testBackground.Unload();
 			player.Unload();
+			UnloadRenderTexture(renderTexture);
 		}
 	}
 }

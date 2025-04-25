@@ -12,8 +12,8 @@ namespace EastSharp
 		
 		public Box3DObjectTest(Vector3 pos, Shader shader, Vector3 rotation)
 		{
-			model = LoadModel("assets/models/WoodBox/WoodBox.obj");
-			textureA = LoadTexture("assets/models/WoodBox/cmn_woodbox01_dfsp_a.png");
+			model = GlobalResources.woodBoxModel;
+			textureA = GlobalResources.woodBoxTexture;
 			time = 0;
 			SetMaterialTexture(ref model, 0, MaterialMapIndex.Albedo, ref textureA);
 			
@@ -37,8 +37,8 @@ namespace EastSharp
 
 		public override void Unload()
 		{
-			UnloadModel(model);
-			UnloadTexture(textureA);
+			isUnload = true;
+			//UnloadModel(model);
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace EastSharp
 	{
 		public List<D3object> backgroundD3objects = new List<D3object>();
 		public Camera3D backgroundCamera;
-		public Shader baseShader = LoadShader("assets/shaders/lighting.vs", "assets/shaders/fog.fs");
+		public Shader baseShader = GlobalResources.baseShader;
 		public float fogDestiny{get; set;}
 
 		public void InitShaders()
