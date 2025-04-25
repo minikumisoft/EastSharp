@@ -8,6 +8,7 @@ namespace EastSharp
 {
 	unsafe class TestInGameScreen : InGameScreen
 	{
+		private Random rand;
 		private PlayerObject player;
 		private List<BaseEnemy> enemies;
 		private List<Bullet> bullets;
@@ -16,6 +17,8 @@ namespace EastSharp
 
 		public TestInGameScreen()
 		{
+			PlayMusicStream(GlobalResources.yorigamiMusic);
+			rand = new Random();
 			player = new PlayerObject(new Vector2(10, 10));
 			enemies = new List<BaseEnemy>();
 			bullets = new List<Bullet>();
@@ -92,9 +95,10 @@ namespace EastSharp
 
 				if(enemies[i].isDeleted)
 				{
+					PlaySound(GlobalResources.enemyDeath);
 					for(int k = 0; k < 10; k++)
 					{
-						items.Add(new PointItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 30, (int)enemies[i].Position.X + 30), enemies[i].Position.Y), GetRandomValue(-2, -3)));
+						items.Add(new PointItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 30, (int)enemies[i].Position.X + 30), enemies[i].Position.Y), YorigamiMath.GetRandomNumber(-2f, -3f)));
 					}
 					enemies.Remove(enemies[i]);
 				}
@@ -126,16 +130,24 @@ namespace EastSharp
 
 				if(CheckCollisionCircleRec(new Vector2(player.Position.X + 17, player.Position.Y + 25), 10, items[i].collisionRect))
 				{
+					PlaySound(GlobalResources.itemCollectSound);
 					GlobalsAndHud.score += 200;
+					items[i].isDeleted = true;
+				}
+
+				if(items[i].isDeleted)
+				{
 					items.Remove(items[i]);
 				}
 			}
 			
 			if(IsKeyPressed(KeyboardKey.P))
 			{
-				items.Add(new PointItem(player.Position, -2));
+				items.Add(new PointItem(new Vector2(player.Position.X, player.Position.Y - 100), YorigamiMath.GetRandomNumber(-2f, -3f)));
 			}
 
+			UpdateMusicStream(GlobalResources.yorigamiMusic);
+			
 			testBackground.Update();
 		}
 

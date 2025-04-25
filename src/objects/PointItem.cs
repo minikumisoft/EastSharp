@@ -11,6 +11,7 @@ namespace EastSharp
 
 		public PointItem(Vector2 pos, float power)
 		{
+			isDeleted = false;
 			Position = pos;
 			gravity = 0.02f;
 			collisionRect = new Rectangle(Position, 8, 8);
@@ -32,6 +33,11 @@ namespace EastSharp
 		{
 			collisionRect = new Rectangle(Position, collisionRect.Width, collisionRect.Height);
 			velocity.Y += gravity;
+
+			if(Position.Y >= 540)
+			{
+				isDeleted = true;
+			}
 			base.Update();
 		}
 	}

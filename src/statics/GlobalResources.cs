@@ -9,12 +9,19 @@ namespace EastSharp
 
 		public static Texture2D PlayerBulletCardTexture;
 		public static Texture2D EnemyBlueMidBallTexture;
+
 		private static int[] codepoints;
 		public static Font debugFontSmall;
 		public static Font debugFontMidMedium;
 		public static Font debugFontMedium;
 		public static Font debugFontLarge;
 		public static Font debugFontLargeItalic;
+
+		public static Music yorigamiMusic;
+
+		public static Sound itemCollectSound;
+		public static Sound enemyDeath;
+		public static Sound playerShot;
 
 		public static void InitResources()
 		{
@@ -38,6 +45,12 @@ namespace EastSharp
 			debugFontMedium = LoadFontEx("assets/fonts/JetBrainsMono-bold.ttf", 20, codepoints, 512);
 			debugFontLarge = LoadFontEx("assets/fonts/JetBrainsMono-bold.ttf", 40, codepoints, 512);
 			debugFontLargeItalic = LoadFontEx("assets/fonts/JetBrainsMono-BoldItalic.ttf", 40, codepoints, 512);
+
+			yorigamiMusic = LoadMusicStream("assets/audio/EgoistFlowers.ogg");
+
+			itemCollectSound = LoadSound("assets/audio/THSSounds/se_item00.wav");
+			enemyDeath = LoadSound("assets/audio/THSSounds/se_enep00.wav");
+			playerShot = LoadSound("assets/audio/THSSounds/se_plst00.wav");
 		}
 
 		public static void Unload()

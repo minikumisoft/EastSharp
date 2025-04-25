@@ -14,8 +14,8 @@ namespace EastSharp
 
 		public static void Run()
 		{
-			SetConfigFlags(ConfigFlags.ResizableWindow);
 			InitWindow(800, 600, "EastSharp");
+			InitAudioDevice();
 			//ToggleFullscreen();
 			SetTargetFPS(60);
 			screen = new TestScreen();

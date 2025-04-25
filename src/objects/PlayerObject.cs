@@ -48,6 +48,7 @@ namespace EastSharp
 			CollisionHandle();
 			if(shootCooldown == 0)
 			{
+				PlaySound(GlobalResources.playerShot);
 				shootCooldown = 5;
 				playerBullet.Add(new Bullet(new Vector2(Position.X + 10, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
 				playerBullet.Add(new Bullet(new Vector2(Position.X + 25, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));

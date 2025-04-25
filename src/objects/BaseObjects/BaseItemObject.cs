@@ -12,6 +12,7 @@ namespace EastSharp
 		public Rectangle textureRecangle;
 		public Rectangle collisionRect;
 		public float gravity;
+		public bool isDeleted;
 
 		public override void Draw()
 		{
