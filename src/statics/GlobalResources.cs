@@ -20,6 +20,7 @@ namespace EastSharp
 
 		private static int[] codepoints;
 		public static Font debugFontSmall;
+		public static Font debugFontMidMediumItalic;
 		public static Font debugFontMidMedium;
 		public static Font debugFontMedium;
 		public static Font debugFontLarge;
@@ -60,6 +61,7 @@ namespace EastSharp
 
 
 			debugFontSmall = LoadFontEx("assets/fonts/JetBrainsMono-bold.ttf", 10, codepoints, 512);
+			debugFontMidMediumItalic = LoadFontEx("assets/fonts/JetBrainsMono-BoldItalic.ttf", 15, codepoints, 512);
 			debugFontMidMedium = LoadFontEx("assets/fonts/JetBrainsMono-bold.ttf", 15, codepoints, 512);
 			debugFontMedium = LoadFontEx("assets/fonts/JetBrainsMono-bold.ttf", 20, codepoints, 512);
 			debugFontLarge = LoadFontEx("assets/fonts/JetBrainsMono-bold.ttf", 40, codepoints, 512);
@@ -90,6 +92,7 @@ namespace EastSharp
 			UnloadImage(cloudImage);
 
 			UnloadFont(debugFontSmall);
+			UnloadFont(debugFontMidMediumItalic);
 			UnloadFont(debugFontMidMedium);
 			UnloadFont(debugFontMedium);
 			UnloadFont(debugFontLarge);

@@ -27,10 +27,7 @@ namespace EastSharp
 		{
 			DrawTexturePro(playerTexture, new Rectangle(0, 0, 34, 48), new Rectangle(Position.X, Position.Y, 34, 48), new Vector2(0, 0), 0, Color.White);
 
-			for(int i = 0; i < playerBullet.Count(); i++)
-			{
-				playerBullet[i].Draw();
-			}
+			DrawPlayerBullets();
 
 			if(Debug.Debugging)
 			{
@@ -46,24 +43,7 @@ namespace EastSharp
 			HandleInput();
 			CheckCorners();
 			CollisionHandle();
-			if(shootCooldown == 0)
-			{
-				PlaySound(GlobalResources.playerShot);
-				shootCooldown = 5;
-				playerBullet.Add(new Bullet(new Vector2(Position.X + 10, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
-				playerBullet.Add(new Bullet(new Vector2(Position.X + 25, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
-			}
-
-
-			for(int i = 0; i < playerBullet.Count(); i++)
-			{
-				playerBullet[i].Update();
-				if(playerBullet[i].isDeleted)
-				{
-					playerBullet[i].Unload();
-					playerBullet.Remove(playerBullet[i]);
-				}
-			}
+			UpdatePlayerBullets();
 
 			Vector2.Normalize(Position);
 		}
@@ -134,5 +114,44 @@ namespace EastSharp
 				debugColor = new Color(127, 127, 127, 200);
 			}
 		}
+
+		/*ПАРАМЕТРИ КУЛЬ ГРАВЦЯ*/
+		private void DrawPlayerBullets()
+		{
+			for(int i = 0; i < playerBullet.Count(); i++)
+			{
+				playerBullet[i].Draw();
+			}
+		}
+
+		private void UpdatePlayerBullets()
+		{
+			for(int i = 0; i < playerBullet.Count(); i++)
+			{
+				playerBullet[i].Update();
+				if(playerBullet[i].isDeleted)
+				{
+					playerBullet[i].Unload();
+					playerBullet.Remove(playerBullet[i]);
+				}
+			}
+
+			if(shootCooldown == 0)
+			{
+				PlaySound(GlobalResources.playerShot);
+				shootCooldown = 5;
+				if(GlobalsAndHud.power < 400)
+				{
+					playerBullet.Add(new Bullet(new Vector2(Position.X + 10, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
+				}
+				else if(GlobalsAndHud.power > 400)
+				{
+					playerBullet.Add(new Bullet(new Vector2(Position.X + 10, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
+					playerBullet.Add(new Bullet(new Vector2(Position.X + 25, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
+				}
+			}
+		}
+
+		
 	}
 }

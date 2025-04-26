@@ -28,7 +28,7 @@ namespace EastSharp
 			BeginBlendMode(BlendMode.Additive);
 				if(isUnload == false)
 				{
-					DrawModelEx(model, Position, Rotation, Rotation.X + Rotation.Y + Rotation.Z, new Vector3(1, 1, 1), Color.White);
+					DrawModelEx(model, Position, Rotation, Rotation.X + Rotation.Y + Rotation.Z, new Vector3(1, 1, 1), Color.Gray);
 				}
 			EndBlendMode();
 		}

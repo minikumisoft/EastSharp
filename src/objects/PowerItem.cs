@@ -5,19 +5,18 @@ using static Raylib_cs.Raylib;
 
 namespace EastSharp
 {
-	class PointItem : Item
+	class PowerItem : Item
 	{
 		
 
-		public PointItem(Vector2 pos, float power)
+		public PowerItem(Vector2 pos, float power)
 		{
-			isDeleted = false;
 			Position = pos;
 			gravity = 0.02f;
 			collisionRect = new Rectangle(Position, 12, 12);
 			velocity.Y = power;
 			texture = GlobalResources.EnemyBlueMidBallTexture;
-			textureRecangle = new Rectangle(276, 356, 12, 12);
+			textureRecangle = new Rectangle(260, 356, 12, 12);
 		}
 
 		public override void Draw()

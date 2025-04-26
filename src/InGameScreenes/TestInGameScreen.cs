@@ -13,6 +13,7 @@ namespace EastSharp
 		private List<BaseEnemy> enemies;
 		private List<Bullet> bullets;
 		private List<Item> items;
+		private List<BaseEffectObject> effects;
 		private D3background testBackground;
 
 		public TestInGameScreen(TestScreen screen)
@@ -20,13 +21,14 @@ namespace EastSharp
 
 			baseScreen = screen;
 
-			PlayMusicStream(GlobalResources.yorigamiMusic);
+			//PlayMusicStream(GlobalResources.yorigamiMusic);
 			rand = new Random();
 			player = new PlayerObject(new Vector2(10, 10));
 			enemies = new List<BaseEnemy>();
 			bullets = new List<Bullet>();
 			items = new List<Item>();
-			enemies.Add(new TestEnemy(new Vector2(GSCREENW/2, GSCREENH/2), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
+			effects = new List<BaseEffectObject>();
+			// enemies.Add(new TestEnemy(new Vector2(GSCREENW/2, GSCREENH/2), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
 			//enemies.Add(new TestEnemy(new Vector2(300, 400), 0.1f, BaseEnemy.EnemyMoveType.Static, YorigamiMath.AngleToRadians(-90), bullets));
 			for(int i = 0; i < 3; i++)
 			{
@@ -40,24 +42,14 @@ namespace EastSharp
 		{
 			base.Draw();
 			BeginTextureMode(renderTexture);
-				ClearBackground(Color.Gray);
+				ClearBackground(Color.Black);
 				testBackground.Draw();
 				player.Draw();
 
-				for(int i = 0; i < enemies.Count(); i++)
-				{
-					enemies[i].Draw();
-				}
-
-				for(int i = 0; i < bullets.Count(); i++)
-				{
-					bullets[i].Draw();
-				}
-
-				for(int i = 0; i < items.Count(); i++)
-				{
-					items[i].Draw();
-				}
+				DrawEnemies();
+				DrawBullets();
+				DrawItems();
+				DrawEffects();
 
 				if(Debug.Debugging)
 				{
@@ -77,7 +69,80 @@ namespace EastSharp
 			player.isCollided = false;
 			player.collidedWith = "None";
 
+			UpdateEnemies();
+			UpdateBullets();
+			UpdateItems();
+			UpdateEffects();
+			
+			if(IsKeyDown(KeyboardKey.P))
+			{
+				items.Add(new PointItem(new Vector2(player.Position.X, player.Position.Y - 100), YorigamiMath.GetRandomNumber(-2f, -3f)));
+				items.Add(new PowerItem(new Vector2(player.Position.X, player.Position.Y - 100), YorigamiMath.GetRandomNumber(-2f, -3f)));
+			}
 
+			if(IsKeyPressed(KeyboardKey.E))
+			{
+				enemies.Add(new TestEnemy(player.Position, 0, BaseEnemy.EnemyMoveType.Static, 0, bullets));
+			}
+
+			if(IsKeyPressed(KeyboardKey.R))
+			{
+				GlobalsAndHud.resetInfo();
+				Unload();
+				baseScreen.gameScreen = new TestInGameScreen(baseScreen);
+			}
+
+			UpdateMusicStream(GlobalResources.yorigamiMusic);
+			
+			testBackground.Update();
+		}
+
+		public override void Unload()
+		{
+			base.Unload();
+			testBackground.Unload();
+			player.Unload();
+			UnloadRenderTexture(renderTexture);
+		}
+
+
+		/*ПАРАМЕТРИ КУЛЬ*/
+
+		private void DrawBullets()
+		{
+			for(int i = 0; i < bullets.Count(); i++)
+			{
+				bullets[i].Draw();
+			}
+		}
+
+		private void UpdateBullets()
+		{
+			for(int i = 0; i < bullets.Count(); i++)
+			{
+				bullets[i].Update();
+
+
+				if(bullets[i].isDeleted)
+				{
+					bullets[i].Unload();
+					bullets.Remove(bullets[i]);
+				}
+			}
+		}
+
+		/*ПАРАМЕТРИ ВОРОГІВ*/
+
+		private void DrawEnemies()
+		{
+			for(int i = 0; i < enemies.Count(); i++)
+			{
+				enemies[i].Draw();
+			}
+		}
+
+		private void UpdateEnemies()
+		{
 			for(int i = 0; i < enemies.Count(); i++)
 			{
 				enemies[i].Update();
@@ -99,26 +164,29 @@ namespace EastSharp
 				if(enemies[i].isDeleted)
 				{
 					PlaySound(GlobalResources.enemyDeath);
-					for(int k = 0; k < 10000; k++)
+					effects.Add(new EnemyBoomEffect(enemies[i].Position));
+					for(int k = 0; k < 5; k++)
 					{
 						items.Add(new PointItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 100, (int)enemies[i].Position.X + 100), enemies[i].Position.Y), YorigamiMath.GetRandomNumber(-2f, -5f)));
+						items.Add(new PowerItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 100, (int)enemies[i].Position.X + 100), enemies[i].Position.Y), YorigamiMath.GetRandomNumber(-2f, -5f)));
 					}
 					enemies.Remove(enemies[i]);
 				}
 			}
+		}
 
-			for(int i = 0; i < bullets.Count(); i++)
+		/*ПАРАМЕТРИ ПРЕДМЕТІВ*/
+		
+		private void DrawItems()
+		{
+			for(int i = 0; i < items.Count(); i++)
 			{
-				bullets[i].Update();
-
-
-				if(bullets[i].isDeleted)
-				{
-					bullets[i].Unload();
-					bullets.Remove(bullets[i]);
-				}
+				items[i].Draw();
 			}
+		}
 
+		private void UpdateItems()
+		{
 			for(int i = 0; i < items.Count(); i++)
 			{
 				items[i].Update();
@@ -126,7 +194,7 @@ namespace EastSharp
 				if(CheckCollisionCircleRec(new Vector2(player.Position.X + 17, player.Position.Y + 25), 75, items[i].collisionRect))
 				{
 					player.isCollided = true;
-					player.collidedWith = "Point";
+					player.collidedWith = "Item";
 					float angle = YorigamiMath.GetAngleToPlayer(new Vector2(player.Position.X + 17, player.Position.Y + 25), items[i].Position);
 					items[i].velocity = new Vector2(MathF.Cos(angle) * 5, MathF.Sin(angle) * 5);
 				}
@@ -134,7 +202,25 @@ namespace EastSharp
 				if(CheckCollisionCircleRec(new Vector2(player.Position.X + 17, player.Position.Y + 25), 10, items[i].collisionRect))
 				{
 					PlaySound(GlobalResources.itemCollectSound);
-					GlobalsAndHud.score += 200;
+
+					if(items[i] is PointItem)
+					{
+						effects.Add(new ShowScoreEffect(items[i].Position, "+200", new Color(0, 0, 255, 255), YorigamiMath.GetRandomNumber(-5, -7)));
+						GlobalsAndHud.score += 200;
+					}
+					else if(items[i] is PowerItem)
+					{
+						if(GlobalsAndHud.power >= 400)
+						{
+							effects.Add(new ShowScoreEffect(items[i].Position, "MAX", new Color(255, 0, 0, 255), YorigamiMath.GetRandomNumber(-5, -7)));
+						}
+						else
+						{
+							effects.Add(new ShowScoreEffect(items[i].Position, "+1", new Color(255, 0, 0, 255), YorigamiMath.GetRandomNumber(-5, -7)));
+						}
+						GlobalsAndHud.power++;
+					}
+
 					items[i].isDeleted = true;
 				}
 
@@ -143,29 +229,27 @@ namespace EastSharp
 					items.Remove(items[i]);
 				}
 			}
-			
-			if(IsKeyPressed(KeyboardKey.P))
-			{
-				items.Add(new PointItem(new Vector2(player.Position.X, player.Position.Y - 100), YorigamiMath.GetRandomNumber(-2f, -3f)));
-			}
-
-			if(IsKeyPressed(KeyboardKey.R))
-			{
-				Unload();
-				baseScreen.gameScreen = new TestInGameScreen(baseScreen);
-			}
-
-			UpdateMusicStream(GlobalResources.yorigamiMusic);
-			
-			testBackground.Update();
 		}
 
-		public override void Unload()
+		private void DrawEffects()
 		{
-			base.Unload();
-			testBackground.Unload();
-			player.Unload();
-			UnloadRenderTexture(renderTexture);
+			for(int i = 0; i < effects.Count(); i++)
+			{
+				effects[i].Draw();
+			}
+		}
+
+		private void UpdateEffects()
+		{
+			for(int i = 0; i < effects.Count(); i++)
+			{
+				effects[i].Update();
+
+				if(effects[i].isDeleted)
+				{
+					effects.Remove(effects[i]);
+				}
+			}
 		}
 	}
 }

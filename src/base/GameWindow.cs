@@ -41,6 +41,17 @@ namespace EastSharp
 		private static void MainUpdate()
 		{
 			screen.Update();
+			baseInputs();
+		}
+
+		public static void ChangeScreen(BaseScreen newScreen)
+		{
+			screen.Unload();
+			screen = newScreen;
+		}
+
+		private static void baseInputs()
+		{
 			if(IsKeyPressed(KeyboardKey.Tab))
 			{
 				if(Debug.Debugging == false)
@@ -51,6 +62,12 @@ namespace EastSharp
 				{
 					Debug.Debugging = false;
 				}
+
+			}
+			
+			if(IsKeyPressed(KeyboardKey.F2))
+			{
+				TakeScreenshot("funnymemescreenshot.png");
 			}
 
 			if(Debug.Debugging)
@@ -62,12 +79,6 @@ namespace EastSharp
 			{
 				ToggleFullscreen();
 			}
-		}
-
-		public static void ChangeScreen(BaseScreen newScreen)
-		{
-			screen.Unload();
-			screen = newScreen;
 		}
 	}
 }
