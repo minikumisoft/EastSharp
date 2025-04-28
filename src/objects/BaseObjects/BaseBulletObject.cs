@@ -9,7 +9,8 @@ namespace EastSharp
 	enum BulletType
 	{
 		PlayerBulletCard,
-		EnemyBlueMidBall
+		EnemyBlueMidBall,
+		StaticDebugBullet
 	}
 
 	class Bullet : BaseObject
@@ -50,6 +51,14 @@ namespace EastSharp
 					collision = new Rectangle(Position, 16, 16);
 					isPlayerBullet = false;
 				break;
+
+				case BulletType.StaticDebugBullet:
+					texture = GlobalResources.EnemyBlueMidBallTexture;
+					textureRect = new Rectangle(97, 49, 16, 16);
+					textureRotation = 0;
+					collision = new Rectangle(Position, 16, 16);
+					isPlayerBullet = false;
+				break;
 			}
 
 			Position = pos;
@@ -63,10 +72,10 @@ namespace EastSharp
 			//BeginBlendMode(BlendMode.Additive);
 			DrawTexturePro(texture, textureRect, new Rectangle(Position.X, Position.Y, textureRect.Width, textureRect.Height), new Vector2(textureRect.Width/2, textureRect.Height/2), textureRotation, Color.White);
 			//EndBlendMode();
-			if(Debug.Debugging)
-			{
-				DrawRectangleRec(collision, new Color(45, 127, 222, 200));
-			}
+			// if(Debug.Debugging)
+			// {
+			// 	DrawRectangleRec(collision, new Color(45, 127, 222, 200));
+			// }
 		}
 
 		public override void Update()
@@ -76,12 +85,14 @@ namespace EastSharp
 
 			velocity = new Vector2(MathF.Cos(angle) * speed, MathF.Sin(angle) * speed);
 
-			if(Position.Y < 0 - 200 || Position.X < 0 - 200 || Position.X >= 450 + 200 || Position.Y >= 540 + 200)
+			if(Position.Y < 0 - 500 || Position.X < 0 - 500 || Position.X >= 450 + 500 || Position.Y >= 540 + 500)
 			{
 				isDeleted = true;
 			}
-
-			Position += velocity;
+			if(bulletType != BulletType.StaticDebugBullet)
+			{
+				Position += velocity;
+			}
 		}
 
 		public override void Unload()

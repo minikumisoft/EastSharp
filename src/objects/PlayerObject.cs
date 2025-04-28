@@ -144,7 +144,7 @@ namespace EastSharp
 				{
 					playerBullet.Add(new Bullet(new Vector2(Position.X + 10, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
 				}
-				else if(GlobalsAndHud.power > 400)
+				else if(GlobalsAndHud.power >= 400)
 				{
 					playerBullet.Add(new Bullet(new Vector2(Position.X + 10, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
 					playerBullet.Add(new Bullet(new Vector2(Position.X + 25, Position.Y), 10, YorigamiMath.AngleToRadians(-90), BulletType.PlayerBulletCard));
@@ -152,6 +152,6 @@ namespace EastSharp
 			}
 		}
 
-		
+
 	}
 }

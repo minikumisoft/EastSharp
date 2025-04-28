@@ -10,13 +10,16 @@ namespace EastSharp
 
 		private float clock;
 		private float cooldown;
-		private RTimer shootCooldown;
+		private float ccccooollldoown;
+		private ETimer shootCooldown;
+		private RTimer shootYield;
 
 		public TestEnemy(Vector2 pos, float speed, EnemyMoveType type, float angle, List<Bullet> bul)
 		{
-			cooldown = 60;
-			shootCooldown = new RTimer();
-			shootCooldown.StartTimer(0.5);
+			cooldown = 0;
+			ccccooollldoown = 50;
+			shootCooldown = new ETimer(60);
+			shootYield = new RTimer();
 			clock = 0;
 			HP = 2;
 			isDeleted = false;
@@ -50,16 +53,23 @@ namespace EastSharp
 		public override void Update()
 		{
 			base.Update();
-			cooldown--;
-			
+			shootCooldown.UpdateTimer();
+
 			if(shootCooldown.TimerDone())
 			{
-				for(int i = 0; i < 26; i++)
+				bullets.Add(new Bullet(new Vector2(Position.X + 14, Position.Y + 14), 5, YorigamiMath.AngleToRadians(clock), BulletType.EnemyBlueMidBall));
+				if(cooldown < 50)
 				{
-					float ang = 360/25;
-					bullets.Add(new Bullet(Position, 2, YorigamiMath.AngleToRadians(i * ang), BulletType.EnemyBlueMidBall));
+					shootCooldown.SetTimer(2);
+					cooldown++;
+					clock += 5;
 				}
-				shootCooldown.StartTimer(1);
+				else
+				{
+					shootCooldown.SetTimer(120);
+					cooldown = 0;
+					clock = 0;
+				}
 			}
 
 			if(clock >= 360)

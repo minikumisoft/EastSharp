@@ -21,13 +21,14 @@ namespace EastSharp
 
 			baseScreen = screen;
 
-			//PlayMusicStream(GlobalResources.yorigamiMusic);
+			PlayMusicStream(GlobalResources.yorigamiMusic);
 			rand = new Random();
 			player = new PlayerObject(new Vector2(10, 10));
 			enemies = new List<BaseEnemy>();
 			bullets = new List<Bullet>();
 			items = new List<Item>();
 			effects = new List<BaseEffectObject>();
+			effects.Add(new StageTitleEffectObject("TestStage", "Тут відбуваються всі приколи двигуна"));
 			// enemies.Add(new TestEnemy(new Vector2(GSCREENW/2, GSCREENH/2), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
 			//enemies.Add(new TestEnemy(new Vector2(300, 400), 0.1f, BaseEnemy.EnemyMoveType.Static, YorigamiMath.AngleToRadians(-90), bullets));
 			for(int i = 0; i < 3; i++)
@@ -65,6 +66,7 @@ namespace EastSharp
 		public override void Update()
 		{
 			base.Update();
+			GlobalsAndHud.UpdateStats(bullets.Count());
 			player.Update();
 			player.isCollided = false;
 			player.collidedWith = "None";
@@ -167,8 +169,8 @@ namespace EastSharp
 					effects.Add(new EnemyBoomEffect(enemies[i].Position));
 					for(int k = 0; k < 5; k++)
 					{
-						items.Add(new PointItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 100, (int)enemies[i].Position.X + 100), enemies[i].Position.Y), YorigamiMath.GetRandomNumber(-2f, -5f)));
-						items.Add(new PowerItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 100, (int)enemies[i].Position.X + 100), enemies[i].Position.Y), YorigamiMath.GetRandomNumber(-2f, -5f)));
+						items.Add(new PointItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 50, (int)enemies[i].Position.X + 50), enemies[i].Position.Y), YorigamiMath.GetRandomNumber(-2f, -3f)));
+						items.Add(new PowerItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 50, (int)enemies[i].Position.X + 50), enemies[i].Position.Y), YorigamiMath.GetRandomNumber(-2f, -3f)));
 					}
 					enemies.Remove(enemies[i]);
 				}

@@ -26,8 +26,10 @@ namespace EastSharp
 		{
 			base.Draw();
 			//BeginBlendMode(BlendMode.Additive);
-			DrawTextEx(GlobalResources.debugFontMidMediumItalic, text, new Vector2(Position.X + 1f, Position.Y + 1f), 15, 1, new Color(0, 0, 0, 255));
-			DrawTextEx(GlobalResources.debugFontMidMediumItalic, text, Position, 15, 1, color);
+			//DrawTextEx(GlobalResources.debugFontMidMediumItalic, text, new Vector2(Position.X + 1f, Position.Y + 1f), 15, 1, new Color(0, 0, 0, 255));
+			//DrawTextEx(GlobalResources.debugFontMidMediumItalic, text, Position, 15, 1, color);
+			DrawTextPro(GlobalResources.debugFontMidMediumItalic, text, new Vector2(Position.X + 1f, Position.Y + 1f), new Vector2(0, 0), velocity.Y * 5, 15, 1, Color.Black);
+			DrawTextPro(GlobalResources.debugFontMidMediumItalic, text, Position, new Vector2(0, 0), velocity.Y * 5, 15, 1, color);
 			//EndBlendMode();
 		}
 
