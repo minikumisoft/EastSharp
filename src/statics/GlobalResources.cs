@@ -60,11 +60,11 @@ namespace EastSharp
             }
 
 
-			debugFontSmall = LoadFontEx("assets/fonts/JetBrainsMono-bold.ttf", 10, codepoints, 512);
+			debugFontSmall = LoadFontEx("assets/fonts/JetBrainsMono-Bold.ttf", 10, codepoints, 512);
 			debugFontMidMediumItalic = LoadFontEx("assets/fonts/JetBrainsMono-BoldItalic.ttf", 15, codepoints, 512);
-			debugFontMidMedium = LoadFontEx("assets/fonts/JetBrainsMono-bold.ttf", 15, codepoints, 512);
-			debugFontMedium = LoadFontEx("assets/fonts/JetBrainsMono-bold.ttf", 20, codepoints, 512);
-			debugFontLarge = LoadFontEx("assets/fonts/JetBrainsMono-bold.ttf", 40, codepoints, 512);
+			debugFontMidMedium = LoadFontEx("assets/fonts/JetBrainsMono-Bold.ttf", 15, codepoints, 512);
+			debugFontMedium = LoadFontEx("assets/fonts/JetBrainsMono-Bold.ttf", 20, codepoints, 512);
+			debugFontLarge = LoadFontEx("assets/fonts/JetBrainsMono-Bold.ttf", 40, codepoints, 512);
 			debugFontLargeItalic = LoadFontEx("assets/fonts/JetBrainsMono-BoldItalic.ttf", 40, codepoints, 512);
 
 			yorigamiMusic = LoadMusicStream("assets/audio/EgoistFlowers.ogg");

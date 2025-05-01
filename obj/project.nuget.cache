@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "qHatogCGuVLJxFwWLijbC/HxD3YcJKliAYD6EC9YarZIP86floXPQw4eK1dkZSqXPopAi3IfQiFVyzZzIUkIKw==",
+  "success": true,
+  "projectFilePath": "/home/k_onna/Стільниця/EastSharp/EastSharp/EastSharp.csproj",
+  "expectedPackageFiles": [
+    "/home/k_onna/.nuget/packages/raylib-cs/7.0.1/raylib-cs.7.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

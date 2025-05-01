@@ -7,8 +7,6 @@ namespace EastSharp
 {
 	class PowerItem : Item
 	{
-		
-
 		public PowerItem(Vector2 pos, float power)
 		{
 			Position = pos;
