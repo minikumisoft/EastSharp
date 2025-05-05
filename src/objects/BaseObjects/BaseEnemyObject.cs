@@ -53,5 +53,13 @@ namespace EastSharp
 			base.Unload();
 			UnloadTexture(texture);
 		}
+
+		public void sukaAddThisShitToGlobalBulletsMotherfucker()
+		{
+			for(int i = 0; i < bullets.Count(); i++)
+			{
+				globalBullets.Add(bullets[i]);
+			}
+		}
 	}
 }

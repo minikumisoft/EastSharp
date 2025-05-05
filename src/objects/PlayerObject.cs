@@ -138,6 +138,13 @@ namespace EastSharp
 				PlaySound(GlobalResources.playerDeath);
 				respawnCoolDown.StartTimer(2);
 			}
+
+			if(isCollided && collidedWith == "EnemyBullet" && !isDead)
+			{
+				isDead = true;
+				PlaySound(GlobalResources.playerDeath);
+				respawnCoolDown.StartTimer(2);
+			}
 		}
 
 		/*ПАРАМЕТРИ КУЛЬ ГРАВЦЯ*/

@@ -15,6 +15,10 @@ namespace EastSharp
 		private List<Item> items;
 		private List<BaseEffectObject> effects;
 		private D3background testBackground;
+		private RTimer coolDownTimer;
+		private double time;
+		private int chap;
+
 
 		public TestInGameScreen(TestScreen screen)
 		{
@@ -29,12 +33,15 @@ namespace EastSharp
 			items = new List<Item>();
 			effects = new List<BaseEffectObject>();
 			effects.Add(new StageTitleEffectObject("TestStage", "Тут відбуваються всі приколи двигуна"));
+			chap = 0;
 			// enemies.Add(new TestEnemy(new Vector2(GSCREENW/2, GSCREENH/2), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
 			//enemies.Add(new TestEnemy(new Vector2(300, 400), 0.1f, BaseEnemy.EnemyMoveType.Static, YorigamiMath.AngleToRadians(-90), bullets));
-			for(int i = 0; i < 3; i++)
-			{
-				enemies.Add(new TestEnemy(new Vector2((GSCREENW/2) + 15 * i, GSCREENH/2), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
-			}
+			// for(int i = 0; i < 3; i++)
+			// {
+			// 	enemies.Add(new TestEnemy(new Vector2((GSCREENW/2) + 15 * i, GSCREENH/2), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
+			// }
+
+			
 
 			testBackground = new TestBackground();
 		}
@@ -55,8 +62,8 @@ namespace EastSharp
 				if(Debug.Debugging)
 				{
 					// DrawText($"BulletCount: {bullets.Count()}", 10, 10, 20, Color.White);
-					DrawTextEx(GlobalResources.debugFontMedium, $"Кількість куль на єкрані: {bullets.Count()}\nКількість предметів на єкрані: {items.Count()}", new Vector2(10+2, 10+2), 20, 0.5f, Color.Black);
-					DrawTextEx(GlobalResources.debugFontMedium, $"Кількість куль на єкрані: {bullets.Count()}\nКількість предметів на єкрані: {items.Count()}", new Vector2(10, 10), 20, 0.5f, Color.White);
+					DrawTextEx(GlobalResources.debugFontMedium, $"Кількість куль на єкрані: {bullets.Count()}\n{enemies.Count()}\nКількість предметів на єкрані: {items.Count()}\nЧас рівня: {time}", new Vector2(10+2, 10+2), 20, 0.5f, Color.Black);
+					DrawTextEx(GlobalResources.debugFontMedium, $"Кількість куль на єкрані: {bullets.Count()}\n{enemies.Count()}\nКількість предметів на єкрані: {items.Count()}\nЧас рівня: {time}", new Vector2(10, 10), 20, 0.5f, Color.White);
 				}
 			EndTextureMode();
 
@@ -66,7 +73,6 @@ namespace EastSharp
 		public override void Update()
 		{
 			base.Update();
-			GlobalsAndHud.UpdateStats(bullets.Count());
 			player.Update();
 			player.isCollided = false;
 			player.collidedWith = "None";
@@ -75,6 +81,7 @@ namespace EastSharp
 			UpdateBullets();
 			UpdateItems();
 			UpdateEffects();
+			StageMap();
 			
 			if(IsKeyDown(KeyboardKey.P))
 			{
@@ -152,7 +159,7 @@ namespace EastSharp
 
 				foreach(Bullet bullet in player.playerBullet)
 				{
-					if(CheckCollisionCircleRec(new Vector2(enemies[i].Position.X + 15, enemies[i].Position.Y + 15), 10, bullet.collision))
+					if(CheckCollisionCircleRec(new Vector2(enemies[i].Position.X + 15, enemies[i].Position.Y + 15), 10, bullet.collision) && bullet.Position != new Vector2(0, 0))
 					{
 						if(bullet.isPlayerBullet)
 						{
@@ -163,7 +170,7 @@ namespace EastSharp
 					}
 				}
 
-				if(enemies[i].isDeleted)
+				if(enemies[i].HP <= 0)
 				{
 					PlaySound(GlobalResources.enemyDeath);
 					effects.Add(new EnemyBoomEffect(enemies[i].Position));
@@ -172,6 +179,21 @@ namespace EastSharp
 						items.Add(new PointItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 50, (int)enemies[i].Position.X + 50), enemies[i].Position.Y), YorigamiMath.GetRandomNumber(-2f, -3f)));
 						items.Add(new PowerItem(new Vector2(GetRandomValue((int)enemies[i].Position.X - 50, (int)enemies[i].Position.X + 50), enemies[i].Position.Y), YorigamiMath.GetRandomNumber(-2f, -3f)));
 					}
+
+
+					foreach(Bullet enemyBullet in enemies[i].bullets)
+					{
+						enemyBullet.speed = 2;
+						bullets.Add(enemyBullet);
+					}
+
+
+					enemies[i].isDeleted = true;
+				}
+
+
+				if(enemies[i].isDeleted)
+				{
 					enemies.Remove(enemies[i]);
 				}
 			}
@@ -182,6 +204,15 @@ namespace EastSharp
 				{
 					player.isCollided = true;
 					player.collidedWith = "TestEnemy";
+				}
+
+				for(int i = 0; i < enemy.bullets.Count(); i++)
+				{
+					if(CheckCollisionCircleRec(new Vector2(player.Position.X + 17, player.Position.Y + 25), 5, enemy.bullets[i].collision))
+					{
+						player.isCollided = true;
+						player.collidedWith = "EnemyBullet";
+					}
 				}
 			}
 		}
@@ -260,6 +291,50 @@ namespace EastSharp
 				{
 					effects.Remove(effects[i]);
 				}
+			}
+		}
+
+		private void StageMap()
+		{
+			time += GetFrameTime();
+
+			// if(time >= 5.5 && chap == 0)
+			// {
+			// 	enemies.Add(new TestEnemy(new Vector2(-20, 30), 2, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(45), bullets));
+			// 	chap++;
+			// }
+
+			if(time >= 6 && chap == 0)
+			{
+				enemies.Add(new TestEnemy(new Vector2(470, 30), 1, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(-180), bullets));
+				chap++;
+			}
+
+			if(time >= 6.2 && chap == 1)
+			{
+				enemies.Add(new TestEnemy(new Vector2(470, 50), 1, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(-180), bullets));
+				chap++;
+			}
+
+			if(time >= 6.4 && chap == 2)
+			{
+				enemies.Add(new TestEnemy(new Vector2(470, 70), 1, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(-180), bullets));
+				chap++;
+			}
+
+			if(time >= 6.6 && chap == 3)
+			{
+				enemies.Add(new TestEnemy(new Vector2(470, 90), 1, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(-180), bullets));
+				chap++;
+			}
+
+			if(time >= 8 && chap == 4)
+			{
+				for(int i = 0; i < 3; i++)
+				{
+					enemies.Add(new TestEnemy(new Vector2(-20, 90 + 10 * i), 1, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(0), bullets));
+				}
+				chap++;
 			}
 		}
 	}

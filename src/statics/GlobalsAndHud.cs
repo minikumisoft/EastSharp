@@ -55,10 +55,5 @@ namespace EastSharp
 			}
 			DrawTextEx(GlobalResources.debugFontMedium, $"FPS:{GetFPS()}", new Vector2(620, 280), 20, 0.5f, Color.Gray);
 		}
-
-		public static void UpdateStats(int i)
-		{
-			BulletCount = i;
-		}
 	}
 }
