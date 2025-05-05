@@ -17,6 +17,7 @@ namespace EastSharp
 		public Rectangle textureRect{get; set;}
 
 		public EnemyMoveType enemyMoveType;
+		public List<Bullet> globalBullets;
 		public List<Bullet> bullets;
 		public Vector2 velocity;
 		public float speed{get; set;}

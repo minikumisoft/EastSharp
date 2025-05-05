@@ -12,6 +12,8 @@ namespace EastSharp
 		private float shootCooldown;
 		public List<Bullet> playerBullet;
 		public Color debugColor;
+		public bool isDead;
+		private RTimer respawnCoolDown;
 
 		public PlayerObject(Vector2 position)
 		{
@@ -20,12 +22,18 @@ namespace EastSharp
 			playerTexture = GlobalResources.reimuTexture;
 			playerSpeed = 3;
 			debugColor = new Color(127, 127, 127, 200);
+			isDead = false;
+			respawnCoolDown = new RTimer();
+			respawnCoolDown.StartTimer(Double.MaxValue);
 			playerBullet = new List<Bullet>();
 		}
 
 		public override void Draw()
 		{
-			DrawTexturePro(playerTexture, new Rectangle(0, 0, 34, 48), new Rectangle(Position.X, Position.Y, 34, 48), new Vector2(0, 0), 0, Color.White);
+			if(isDead == false)
+			{
+				DrawTexturePro(playerTexture, new Rectangle(0, 0, 34, 48), new Rectangle(Position.X, Position.Y, 34, 48), new Vector2(0, 0), 0, Color.White);
+			}
 
 			DrawPlayerBullets();
 
@@ -45,6 +53,13 @@ namespace EastSharp
 			CollisionHandle();
 			UpdatePlayerBullets();
 
+			if(respawnCoolDown.TimerDone())
+			{
+				Position = new Vector2(10, 10);
+				isDead = false;
+				respawnCoolDown.StartTimer(Double.MaxValue);
+			}
+
 			Vector2.Normalize(Position);
 		}
 
@@ -56,29 +71,32 @@ namespace EastSharp
 		// PRIVATE FUNCTIONS
 		private void HandleInput()
 		{
-			if(IsKeyDown(KeyboardKey.Down))
+			if(!isDead)
 			{
-				Position += new Vector2(0, 1) * playerSpeed;
-			}
+				if(IsKeyDown(KeyboardKey.Down))
+				{
+					Position += new Vector2(0, 1) * playerSpeed;
+				}
 
-			if(IsKeyDown(KeyboardKey.Up))
-			{
-				Position += new Vector2(0, -1) * playerSpeed;
-			}
+				if(IsKeyDown(KeyboardKey.Up))
+				{
+					Position += new Vector2(0, -1) * playerSpeed;
+				}
 
-			if(IsKeyDown(KeyboardKey.Left))
-			{
-				Position += new Vector2(-1, 0) * playerSpeed;
-			}
+				if(IsKeyDown(KeyboardKey.Left))
+				{
+					Position += new Vector2(-1, 0) * playerSpeed;
+				}
 
-			if(IsKeyDown(KeyboardKey.Right))
-			{
-				Position += new Vector2(1, 0) * playerSpeed;
-			}
+				if(IsKeyDown(KeyboardKey.Right))
+				{
+					Position += new Vector2(1, 0) * playerSpeed;
+				}
 
-			if(IsKeyDown(KeyboardKey.Z))
-			{
-				shootCooldown--;
+				if(IsKeyDown(KeyboardKey.Z))
+				{
+					shootCooldown--;
+				}
 			}
 		}
 
@@ -112,6 +130,13 @@ namespace EastSharp
 			else
 			{
 				debugColor = new Color(127, 127, 127, 200);
+			}
+
+			if(isCollided && collidedWith == "TestEnemy" && !isDead)
+			{
+				isDead = true;
+				PlaySound(GlobalResources.playerDeath);
+				respawnCoolDown.StartTimer(2);
 			}
 		}
 

@@ -23,7 +23,8 @@ namespace EastSharp
 			clock = 0;
 			HP = 2;
 			isDeleted = false;
-			bullets = bul;
+			bullets = new List<Bullet>();
+			globalBullets = bul;
 			texture = GlobalResources.enemyBlue;
 			textureRect = new Rectangle(1, 1, 29, 29);
 			Position = pos;
@@ -37,10 +38,7 @@ namespace EastSharp
 			base.Draw();
 			DrawTexturePro(texture, textureRect, new Rectangle(Position, textureRect.Width, textureRect.Height), new Vector2(0, 0), 0, Color.White);
 
-			// for(int i = 0; i < bullets.Count(); i++)
-			// {
-			// 	bullets[i].Draw();
-			// }
+			DrawLocalBullets();
 
 			if(Debug.Debugging)
 			{
@@ -60,13 +58,21 @@ namespace EastSharp
 				bullets.Add(new Bullet(new Vector2(Position.X + 14, Position.Y + 14), 5, YorigamiMath.AngleToRadians(clock), BulletType.EnemyBlueMidBall));
 				if(cooldown < 50)
 				{
-					shootCooldown.SetTimer(2);
+					shootCooldown.SetTimer(10);
+					for(int i = 0; i < bullets.Count() - 3; i++)
+					{
+						bullets[i].speed = 2;
+					}
 					cooldown++;
 					clock += 5;
 				}
 				else
 				{
 					shootCooldown.SetTimer(120);
+					for(int i = 0; i < bullets.Count(); i++)
+					{
+						bullets[i].speed = 2;
+					}
 					cooldown = 0;
 					clock = 0;
 				}
@@ -77,23 +83,48 @@ namespace EastSharp
 				clock = 0;
 			}
 
-			// for(int i = 0; i < bullets.Count(); i++)
-			// {
-			// 	bullets[i].Update();
+			UpdateLocalBullets();
 
-			// 	if(bullets[i].isDeleted)
-			// 	{
-			// 		bullets[i].Unload();
-			// 		bullets.Remove(bullets[i]);
-			// 	}
-			// }
+			if(isDeleted)
+			{
+				for(int i = 0; i < bullets.Count(); i++)
+				{
+					bullets[i].speed = 2;
+				}
 
-			
+
+				for(int i = 0; i < bullets.Count(); i++)
+				{
+					globalBullets.Add(bullets[i]);
+				}
+			}
 		}
 
 		public override void Unload()
 		{
 			base.Unload();
+		}
+
+		private void DrawLocalBullets()
+		{
+			for(int i = 0; i < bullets.Count(); i++)
+			{
+				bullets[i].Draw();
+			}
+		}
+
+		private void UpdateLocalBullets()
+		{
+			for(int i = 0; i < bullets.Count(); i++)
+			{
+				bullets[i].Update();
+
+				if(bullets[i].isDeleted)
+				{
+					bullets[i].Unload();
+					bullets.Remove(bullets[i]);
+				}
+			}
 		}
 	}
 }

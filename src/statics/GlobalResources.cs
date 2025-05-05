@@ -31,6 +31,7 @@ namespace EastSharp
 		public static Sound itemCollectSound;
 		public static Sound enemyDeath;
 		public static Sound playerShot;
+		public static Sound playerDeath;
 
 		public static Model cloudModel;
 		public static Model woodBoxModel;
@@ -72,6 +73,7 @@ namespace EastSharp
 			itemCollectSound = LoadSound("assets/audio/THSSounds/se_item00.wav");
 			enemyDeath = LoadSound("assets/audio/THSSounds/se_enep00.wav");
 			playerShot = LoadSound("assets/audio/THSSounds/se_plst00.wav");
+			playerDeath = LoadSound("assets/audio/THSSounds/se_pldead00.wav");
 
 			cloudModel = LoadModelFromMesh(GenMeshPlane(100, 50, 1, 1));
 			woodBoxModel = LoadModel("assets/models/WoodBox/WoodBox.obj");
@@ -102,6 +104,7 @@ namespace EastSharp
 			UnloadSound(itemCollectSound);
 			UnloadSound(enemyDeath);
 			UnloadSound(playerShot);
+			UnloadSound(playerDeath);
 		}
 	}
 }

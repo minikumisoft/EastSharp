@@ -21,7 +21,7 @@ namespace EastSharp
 
 			baseScreen = screen;
 
-			PlayMusicStream(GlobalResources.yorigamiMusic);
+			//PlayMusicStream(GlobalResources.yorigamiMusic);
 			rand = new Random();
 			player = new PlayerObject(new Vector2(10, 10));
 			enemies = new List<BaseEnemy>();
@@ -175,6 +175,15 @@ namespace EastSharp
 					enemies.Remove(enemies[i]);
 				}
 			}
+
+			foreach(BaseEnemy enemy in enemies)
+			{
+				if(CheckCollisionCircles(new Vector2(player.Position.X + 17, player.Position.Y + 25), 5, new Vector2(enemy.Position.X + 15, enemy.Position.Y + 15), 10))
+				{
+					player.isCollided = true;
+					player.collidedWith = "TestEnemy";
+				}
+			}
 		}
 
 		/*ПАРАМЕТРИ ПРЕДМЕТІВ*/
@@ -193,7 +202,7 @@ namespace EastSharp
 			{
 				items[i].Update();
 
-				if(CheckCollisionCircleRec(new Vector2(player.Position.X + 17, player.Position.Y + 25), 75, items[i].collisionRect))
+				if(CheckCollisionCircleRec(new Vector2(player.Position.X + 17, player.Position.Y + 25), 75, items[i].collisionRect) && !player.isDead)
 				{
 					player.isCollided = true;
 					player.collidedWith = "Item";
@@ -201,7 +210,7 @@ namespace EastSharp
 					items[i].velocity = new Vector2(MathF.Cos(angle) * 5, MathF.Sin(angle) * 5);
 				}
 
-				if(CheckCollisionCircleRec(new Vector2(player.Position.X + 17, player.Position.Y + 25), 10, items[i].collisionRect))
+				if(CheckCollisionCircleRec(new Vector2(player.Position.X + 17, player.Position.Y + 25), 10, items[i].collisionRect) && !player.isDead)
 				{
 					PlaySound(GlobalResources.itemCollectSound);
 
