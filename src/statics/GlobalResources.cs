@@ -15,6 +15,7 @@ namespace EastSharp
 		public static Texture2D woodBoxTexture;
 		public static Texture2D reimuTexture;
 		public static Texture2D enemyBlue;
+		public static Texture2D pathouliAstmaTexture;
 
 		public static Image cloudImage;
 
@@ -48,6 +49,7 @@ namespace EastSharp
 			cloudTexture = LoadTextureFromImage(cloudImage);
 			woodBoxTexture = LoadTexture("assets/models/WoodBox/cmn_woodbox01_dfsp_a.png");
 			enemyBlue = LoadTexture("assets/images/enemies/faily_blue.png");
+			pathouliAstmaTexture = LoadTexture("assets/images/33547.png");
 
 			codepoints = new int[512];
             for(int i = 0; i < 95; i++)
@@ -90,6 +92,7 @@ namespace EastSharp
 			UnloadTexture(reimuTexture);
 			UnloadTexture(woodBoxTexture);
 			UnloadTexture(enemyBlue);
+			UnloadTexture(pathouliAstmaTexture);
 
 			UnloadImage(cloudImage);
 

@@ -11,6 +11,7 @@ namespace EastSharp
 		private Random rand;
 		private PlayerObject player;
 		private List<BaseEnemy> enemies;
+		private List<BaseBossObject> bosses;
 		private List<Bullet> bullets;
 		private List<Item> items;
 		private List<BaseEffectObject> effects;
@@ -29,6 +30,7 @@ namespace EastSharp
 			rand = new Random();
 			player = new PlayerObject(new Vector2(10, 10));
 			enemies = new List<BaseEnemy>();
+			bosses = new List<BaseBossObject>();
 			bullets = new List<Bullet>();
 			items = new List<Item>();
 			effects = new List<BaseEffectObject>();
@@ -55,6 +57,7 @@ namespace EastSharp
 				player.Draw();
 
 				DrawEnemies();
+				DrawBoss();
 				DrawBullets();
 				DrawItems();
 				DrawEffects();
@@ -78,6 +81,7 @@ namespace EastSharp
 			player.collidedWith = "None";
 
 			UpdateEnemies();
+			UpdateBoss();
 			UpdateBullets();
 			UpdateItems();
 			UpdateEffects();
@@ -136,6 +140,12 @@ namespace EastSharp
 				{
 					bullets[i].Unload();
 					bullets.Remove(bullets[i]);
+				}
+
+				if(CheckCollisionCircleRec(new Vector2(player.Position.X + 17, player.Position.Y + 25), 5, bullets[i].collision) && bullets[i].isPlayerBullet == false)
+				{
+					player.isCollided = true;
+					player.collidedWith = "EnemyBullet";
 				}
 			}
 		}
@@ -214,6 +224,23 @@ namespace EastSharp
 						player.collidedWith = "EnemyBullet";
 					}
 				}
+			}
+		}
+
+		/*ПАРАМЕТРИ ЗЛОЧИНЦІВ*/
+		private void DrawBoss()
+		{
+			for(int i = 0; i < bosses.Count(); i++)
+			{
+				bosses[i].Draw();
+			}
+		}
+
+		private void UpdateBoss()
+		{
+			for(int i = 0; i < bosses.Count(); i++)
+			{
+				bosses[i].Update();
 			}
 		}
 
@@ -304,36 +331,9 @@ namespace EastSharp
 			// 	chap++;
 			// }
 
-			if(time >= 6 && chap == 0)
+			if(time >= 4 && chap == 0)
 			{
-				enemies.Add(new TestEnemy(new Vector2(470, 30), 1, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(-180), bullets));
-				chap++;
-			}
-
-			if(time >= 6.2 && chap == 1)
-			{
-				enemies.Add(new TestEnemy(new Vector2(470, 50), 1, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(-180), bullets));
-				chap++;
-			}
-
-			if(time >= 6.4 && chap == 2)
-			{
-				enemies.Add(new TestEnemy(new Vector2(470, 70), 1, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(-180), bullets));
-				chap++;
-			}
-
-			if(time >= 6.6 && chap == 3)
-			{
-				enemies.Add(new TestEnemy(new Vector2(470, 90), 1, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(-180), bullets));
-				chap++;
-			}
-
-			if(time >= 8 && chap == 4)
-			{
-				for(int i = 0; i < 3; i++)
-				{
-					enemies.Add(new TestEnemy(new Vector2(-20, 90 + 10 * i), 1, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(0), bullets));
-				}
+				bosses.Add(new PathouliBoss(new Vector2(100, 100)));
 				chap++;
 			}
 		}
