@@ -41,7 +41,6 @@ namespace EastSharp
             {
                 Console.WriteLine("Stoped");
                 functionRunOnes = true;
-                moveTime.StartTimer(double.MaxValue);
                 moveTimerStart = false;
                 return;
             }
