@@ -36,6 +36,8 @@ namespace EastSharp
 			effects = new List<BaseEffectObject>();
 			effects.Add(new StageTitleEffectObject("TestStage", "Тут відбуваються всі приколи двигуна"));
 			chap = 0;
+
+
 			// enemies.Add(new TestEnemy(new Vector2(GSCREENW/2, GSCREENH/2), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
 			//enemies.Add(new TestEnemy(new Vector2(300, 400), 0.1f, BaseEnemy.EnemyMoveType.Static, YorigamiMath.AngleToRadians(-90), bullets));
 			// for(int i = 0; i < 3; i++)
@@ -43,7 +45,7 @@ namespace EastSharp
 			// 	enemies.Add(new TestEnemy(new Vector2((GSCREENW/2) + 15 * i, GSCREENH/2), 2, BaseEnemy.EnemyMoveType.Static, 20, bullets));
 			// }
 
-			
+
 
 			testBackground = new TestBackground();
 		}
@@ -80,9 +82,9 @@ namespace EastSharp
 			player.isCollided = false;
 			player.collidedWith = "None";
 
+			UpdateBullets();
 			UpdateEnemies();
 			UpdateBoss();
-			UpdateBullets();
 			UpdateItems();
 			UpdateEffects();
 			StageMap();
@@ -123,7 +125,7 @@ namespace EastSharp
 
 		private void DrawBullets()
 		{
-			for(int i = 0; i < bullets.Count(); i++)
+			for(int i = 0; i < bullets.Count() - 1; i++)
 			{
 				bullets[i].Draw();
 			}
@@ -131,7 +133,7 @@ namespace EastSharp
 
 		private void UpdateBullets()
 		{
-			for(int i = 0; i < bullets.Count(); i++)
+			for(int i = 0; i < bullets.Count() - 1; i++)
 			{
 				bullets[i].Update();
 
@@ -238,9 +240,46 @@ namespace EastSharp
 
 		private void UpdateBoss()
 		{
-			for(int i = 0; i < bosses.Count(); i++)
+			for (int i = 0; i < bosses.Count(); i++)
 			{
 				bosses[i].Update();
+
+				foreach (Bullet bullet in player.playerBullet)
+				{
+					if (CheckCollisionCircleRec(new Vector2(bosses[i].Position.X + 17, bosses[i].Position.Y + 25), 10, bullet.collision) && bullet.isPlayerBullet)
+					{
+						bosses[i].HP--;
+						bullet.isDeleted = true;
+					}
+				}
+
+				if (bosses[i].HP <= 0)
+				{
+					for (int j = 0; j < bosses[i].localBullets.Count() - 1; j++)
+					{
+						bullets.Add(bosses[i].localBullets[j]);
+					}
+
+					bosses[i].isDeleted = true;
+				}
+
+				if (bosses[i].isDeleted)
+				{
+					bosses.Remove(bosses[i]);
+				}
+			}
+
+			foreach (BaseBossObject boss in bosses)
+			{
+
+				foreach (Bullet bullet in boss.localBullets)
+				{
+					if (CheckCollisionCircleRec(new Vector2(player.Position.X + 17, player.Position.Y + 25), 5, bullet.collision))
+					{
+						player.isCollided = true;
+						player.collidedWith = "EnemyBullet";
+					}
+				}
 			}
 		}
 
@@ -327,13 +366,15 @@ namespace EastSharp
 
 			// if(time >= 5.5 && chap == 0)
 			// {
-			// 	enemies.Add(new TestEnemy(new Vector2(-20, 30), 2, BaseEnemy.EnemyMoveType.LinearMove, YorigamiMath.AngleToRadians(45), bullets));
+			// 	enemies.Add(new TestEnemy(new Vector2(20, 30), 2, BaseEnemy.EnemyMoveType.Static, YorigamiMath.AngleToRadians(45), bullets));
+			// 	enemies.Add(new TestEnemy(new Vector2(50, 30), 2, BaseEnemy.EnemyMoveType.Static, YorigamiMath.AngleToRadians(45), bullets));
+			// 	enemies.Add(new TestEnemy(new Vector2(60, 30), 2, BaseEnemy.EnemyMoveType.Static, YorigamiMath.AngleToRadians(45), bullets));
 			// 	chap++;
 			// }
 
 			if(time >= 4 && chap == 0)
 			{
-				bosses.Add(new PathouliBoss(new Vector2(100, 100)));
+				bosses.Add(new PathouliBoss(new Vector2(100, 100), bullets));
 				chap++;
 			}
 		}

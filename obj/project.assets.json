@@ -67,19 +67,19 @@
     ]
   },
   "packageFolders": {
-    "/home/k_onna/.nuget/packages/": {}
+    "/home/konna/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/k_onna/Стільниця/EastSharp/EastSharp/EastSharp.csproj",
+      "projectUniqueName": "/home/konna/EastSharp/EastSharp.csproj",
       "projectName": "EastSharp",
-      "projectPath": "/home/k_onna/Стільниця/EastSharp/EastSharp/EastSharp.csproj",
-      "packagesPath": "/home/k_onna/.nuget/packages/",
-      "outputPath": "/home/k_onna/Стільниця/EastSharp/EastSharp/obj/",
+      "projectPath": "/home/konna/EastSharp/EastSharp.csproj",
+      "packagesPath": "/home/konna/.nuget/packages/",
+      "outputPath": "/home/konna/EastSharp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/k_onna/.nuget/NuGet/NuGet.Config"
+        "/home/konna/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -124,7 +124,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.115/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.116/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
